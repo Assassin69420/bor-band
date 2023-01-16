@@ -1,0 +1,208 @@
+.wrap {
+  position: relative;
+  margin-top: 200px;
+  margin-left: 480px;
+  
+}
+
+@property --rotate {
+    syntax: "<angle>";
+    initial-value: 132deg;
+    inherits: false;
+  }
+
+.newsletter-bg {
+    background: linear-gradient(360deg,#141e30, #243b55);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px;
+  filter: blur(1000px);
+  z-index: 9999;
+}
+
+.newsletter-text {
+    background: linear-gradient(360deg,#141e30,#243b55);
+    border-radius: 15px;
+    box-shadow:  40px 40px 40px #243b55,
+    0 0 0 #141e30,
+    0 0 0 #243b55 inset,
+    2px 2px 2px #141e30 inset;
+  padding: 50px;
+  position: relative;
+  max-width: 1000px;
+  height: 600px;
+  z-index: 9999;
+}
+  span {
+
+    color: #88f1f6;
+    margin-top: 0;
+    font-family: 'proxima-nova-soft';
+    font-weight: 700;
+    animation:  letterspacing 1s ease-in;
+    font-size: 60px;
+    z-index: 9999;
+  }
+  .fact{
+    color: #03e9f4;
+    font-size: 40px;
+    z-index: 999;
+    animation:  letterspacing 1s ease-in;
+    margin-top: 50px;
+    padding-left: 20px;
+  }
+  .act{
+    color: #03e9f4;
+    font-size: 40px;
+    z-index: 999;
+    animation:  letterspacing 1s ease-in;
+    margin-top: 50px;
+    padding-left: 200px;
+  }
+
+  @keyframes lett {
+    0% {
+        letter-spacing: -1.2rem;
+        filter: blur(.3rem);
+    }
+
+    50% {
+        filter: blur(.5rem);
+    }
+
+    100% {
+        letter-spacing: .0rem;
+        filter: blur(0rem);
+        color: #03e9f4;
+    }
+}
+
+.bot{
+    color: white;
+    position: relative;
+    font-size: 13px;
+    margin-top: 100px;
+    margin-right: 450px;
+    z-index: 999;
+  }
+
+  .card:hover {
+    color: rgb(88 199 250 / 100%);
+    transition: color 1s;
+  }
+  .card:hover:before, .card:hover:after {
+    animation: none;
+    opacity: 0;
+  }
+  
+  
+  .newsletter-text::before {
+    content: "";
+    width: 104%;
+    height: 102%;
+    border-radius: 8px;
+    background-image: linear-gradient(
+      var(--rotate)
+      , #243b55 43%, #141e30);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 10.5s linear infinite;
+  }
+  
+  .card::after {
+    position: absolute;
+    content: "";
+    top: calc(var(--card-height) / 6);
+    left: 0;
+    right: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--card-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% {
+      --rotate: 0deg;
+    }
+    100% {
+      --rotate: 360deg;
+    }
+  }
+
+  
+
+
+.space {
+    position: relative;
+    display: flex;
+  }
+  
+  .glow {
+    list-style: none;
+  }
+  
+  label {
+    position: relative;
+  }
+  
+  input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 80px;
+    width: 80px;
+    z-index: 100;
+  }
+  
+  .final {
+    position: relative;
+    height: 80px;
+    width: 80px;
+    background: linear-gradient(360deg,#141e30,#243b55);
+    color: #03e9f4;
+    display: flex;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 46px;
+    cursor: pointer;
+    margin: 0 4px;
+    border-radius: 20px;
+    box-shadow: -1px -1px 4px rgba(255, 255, 255, 0.05),
+      4px 4px 6px rgba(0, 0, 0, 0.2),
+      inset -1px -1px 4px rgba(255, 255, 255, 0.05),
+      inset 1px 1px 1px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  input[type="checkbox"]:checked ~ div {
+    box-shadow: inset 0 0 2px rgba(255, 255, 255, 0.05),
+      inset 4px 4px 6px rgba(0, 0, 0, 0.2);
+    color: yellow;
+    text-shadow: 0 0 15px yellow, 0 0 25px yellow;
+    animation: glow 1.5s linear infinite;
+  }
+  
+  @keyframes glow {
+    0% {
+      filter: hue-rotate(0deg);
+    }
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+  
