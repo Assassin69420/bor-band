@@ -86,6 +86,7 @@ body .vertical-centered-box {
   width: 100%;
   height: 100%;
   text-align: center;
+  z-index: -20;
 }
 body .vertical-centered-box:after {
   content: '';
@@ -142,6 +143,7 @@ body .vertical-centered-box .content {
     opacity: 1;
   }
 }
+
     </style>
 </head>
 <body>
@@ -158,7 +160,7 @@ body .vertical-centered-box .content {
            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 291 385.3" style="enable-background:new 0 0 291 385.3;" xml:space="preserve">
     <style type="text/css">
-        .st0{fill:#000;}
+        .st0{fill: #000;}
     </style>
     <polygon class="st0" points="82.1,12 7.4,138.7 38.7,237.3 "/>
     <polygon class="st0" points="92.7,5.3 199.4,8.7 223.4,82.7 "/>
@@ -183,42 +185,16 @@ body .vertical-centered-box .content {
             </div>
         </div>
     </nav>
-  <div class="wrap">
-      <div class="newsletter-bg"></div>  
-<div class="newsletter-text">
-  <ul class="space">
-    <li class="glow">
-      <input type="checkbox" />
-      <div class="final">W</div>
-    </li>
-    <li>
-      <input type="checkbox" />
-      <div class="final">E</div>
-    </li>
-    <li>
-      <input type="checkbox" />
-      <div class="final">L</div>
-    </li>
-    <li>
-      <input type="checkbox" />
-        <div class="final">C</div> 
-    </li>
-    <li>
-      <input type="checkbox" />
-      <div class="final">O</div>
-    </li>
-    <li>
-      <input type="checkbox" />
-      <div class="final">M</div>
-    </li>
-    <li>
-      <input type="checkbox" />
-      <div class="final">E</div>
-    </li>
-  </ul>
-    <h2 class="fact">~~ Random Fact</h2>
-    <h3 class="act">Generating random facts</h3>
-  </div>
+    <div class="con">
+      <div class="loader-weight">
+        <h1>Check Internet Speed</h1>
+        <span class="loader hide"></span>
+        <div class="loader-content">
+          <div class="content hide">24<small>Mbps</small></div>
+          <button type="button" id="mybt" onclick="start()">GO</button>
+        </div>
+      </div>
+    </div>
   <div>
     <h4 class="bot">By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and Content Policies. All trademarks are properties of their respective owners. 2023 © Bro Band™ Ltd. All rights reserved.</h4>
   </div>
