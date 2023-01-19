@@ -148,14 +148,14 @@ $all_services = get_all_services($db);
 		while ($row = $all_services->fetch_assoc()) {
 			echo '<div class="service_card">';
 			echo '<div class="profile-card__img">';
-			echo '<img src="https://mediaim.expedia.com/destination/1/2d75301e5fa5840846672492693f1fb3.jpg" alt="profile card">';
+			echo '<img src="',$row['img'],'" alt="profile card">';
 			echo '</div>';
 			echo '<div class="card_content">';
-			echo '<p> S_id: ', $row['S_id'], '</p>';
-			echo '<p> S_City: ', $row['S_city'], '</p>';
-			echo '<p> S_phone: ', $row['S_phone'], '</p>';
-			echo '<p> S_phone: ', $row['S_amount'], '</p>';
-			echo '<p> Of_id: ', $row['Of_id'], '</p>';
+			echo '<p> Service ID: ', $row['S_id'], '</p>';
+			echo '<p> Service City: ', $row['S_city'], '</p>';
+			echo '<p> phone number: ', $row['S_phone'], '</p>';
+			echo '<p> Amount: ', $row['S_amount'], '</p>';
+			echo '<p> Offer ID: ', $row['Of_id'], '</p>';
 			echo '</div>';
 			echo '</div>';
 		}
