@@ -3,6 +3,7 @@ include('db.php');
 include('services/broband_servies.php');
 
 $all_services = get_all_services($db);
+$page = "service";
 ?>
 
 <!DOCTYPE html>
@@ -135,9 +136,9 @@ $all_services = get_all_services($db);
 			</div>
 			<div class="collapse navbar-collapse navbar-right" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="index.html">Home</a></li>
+					<li><a href="index.php">Home</a></li>
 					<li><a href="service.php" class="active">Service</a></li>
-					<li><a href="plans.html">Plans</a></li>
+					<li><a href="plans.php">Plans</a></li>
 					<li><a href="profile.php">Profile</a></li>
 				</ul>
 			</div>

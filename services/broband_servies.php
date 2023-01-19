@@ -7,3 +7,12 @@ function get_all_services($db)
 	$res = mysqli_query($db, $sql);
 	return $res;
 }
+
+function get_all_plans($db)
+{
+	//connect to database
+	$sql = "SELECT Plan_id, Plan_Name, Plan_starting_Date, Plan_ending_Date, Plan_amount FROM plans";
+
+	$res = mysqli_query($db, $sql);
+	return $res;
+}
