@@ -58,7 +58,8 @@ CREATE TABLE `service` (
   `S_city` varchar(255) NOT NULL,
   `S_phone` bigint(20) NOT NULL,
   `S_amount` bigint(20) NOT NULL,
-  `Of_id` int(11) DEFAULT NULL
+  `Of_id` int(11) DEFAULT NULL,
+  img varchar(255) default 'https://media.istockphoto.com/id/1370234236/photo/mumbai-city-scape.jpg?s=612x612&w=0&k=20&c=BT4YUuJgYmNl8_HiJ2ypJbLu4WD7d0tolhRz36vueok=';
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
