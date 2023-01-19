@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MyWebsite</title>
-	<link rel="stylesheet" href="any.css">
+	<link rel="stylesheet" href="home.css">
 	<link rel="stylesheet" type="text/css" href="css/normalize.css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/layout.css">
@@ -20,12 +20,10 @@
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
 
-
 		body {
 			width: 100%;
 			height: 100%;
 			background: linear-gradient(#141e30, #243b55);
-			position: relative;
 		}
 
 		html {
@@ -38,9 +36,6 @@
 			border: 0;
 			z-index: 9999;
 			letter-spacing: 4px;
-			overflow: hidden;
-			position: fixed;
-			height: 80px;
 
 		}
 
@@ -61,7 +56,6 @@
 
 		.navbar .nav>li>a {
 			line-height: 50px;
-			margin-top: 0px;
 		}
 
 		.navbar-header h1 {
@@ -87,74 +81,91 @@
 			color: white !important;
 		}
 
-		.profile-card-ctr {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-top: 40px;
+		.img {
+			margin-left: 24.5%;
+			height: auto;
 		}
 
-		@media screen and (max-width: 576px) {
-			.profile-card-ctr {
-				flex-wrap: wrap;
-			}
+		body {
+			-webkit-font-smoothing: antialiased;
+			text-rendering: optimizeLegibility;
+			font-family: "proxima-nova-soft", sans-serif;
+			user-select: none;
+			overflow: hidden;
 		}
 
-		.profile-card__button {
-			background: none;
-			border: none;
-			font-family: "Quicksand", sans-serif;
-			font-weight: 700;
-			font-size: 19px;
-			margin: 15px 35px;
-			padding: 15px 40px;
-			min-width: 201px;
-			border-radius: 50px;
-			min-height: 55px;
-			color: #fff;
-			cursor: pointer;
-			backface-visibility: hidden;
+		body .vertical-centered-box {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			z-index: -20;
+		}
+
+		body .vertical-centered-box:after {
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+			margin-right: -0.25em;
+		}
+
+		body .vertical-centered-box .content {
+			box-sizing: border-box;
+			display: inline-block;
+			vertical-align: middle;
+			text-align: left;
+			font-size: 0;
+		}
+
+		* {
 			transition: all 0.3s;
 		}
 
-		.profile-card-ctr {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-top: 40px;
+		#particles-background,
+		#particles-foreground {
+			left: -51%;
+			top: -51%;
+			width: 202%;
+			height: 202%;
+			transform: scale3d(0.5, 0.5, 1);
 		}
 
-		@media screen and (max-width: 576px) {
-			.profile-card-ctr {
-				flex-wrap: wrap;
+		#particles-background {
+			background: #2c2d44;
+			background-image: -moz-linear-gradient(45deg, #141e30, #243b55);
+			background-image: -webkit-linear-gradient(45deg, #141e30, #243b55);
+			background-image: linear-gradient(45deg, #141e30, #243b55);
+		}
+
+		@keyframes rotate {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
 			}
 		}
 
-		.profile-card__button:focus {
-			outline: none !important;
-		}
+		@keyframes fade {
+			0% {
+				opacity: 1;
+			}
 
-		@media screen and (min-width: 768px) {
-			.profile-card__button:hover {
-				transform: translateY(-8px);
+			50% {
+				opacity: 0.25;
 			}
 		}
 
-		.profile-card__button.button--orange {
-			background: linear-gradient(45deg, #141e30, #243b55);
-			box-shadow: 0px 4px 30px #141e30;
-		}
+		@keyframes fade-in {
+			0% {
+				opacity: 0;
+			}
 
-		.profile-card__button.button--orange:hover {
-			box-shadow: 0px 7px 30px #03e9f4;
-		}
-
-		.td {
-			padding-left: 110px;
-		}
-
-		.ts {
-			padding-left: 210px;
+			100% {
+				opacity: 1;
+			}
 		}
 	</style>
 </head>
@@ -193,71 +204,35 @@
 			</div>
 			<div class="collapse navbar-collapse navbar-right" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="index.html">Home</a></li>
+					<li><a href="index.html" class="active">Home</a></li>
 					<li><a href="service.php">Service</a></li>
-					<li><a href="plans.html" class="active">Plans</a></li>
+					<li><a href="plans.html">Plans</a></li>
 					<li><a href="profile.php">Profile</a></li>
+					<li><a href="register.php">Login/Register</a></li>
 				</ul>
 			</div>
 		</div>
 	</nav>
-	<table class="table">
-		<tr class="tr">
-			<td>
-				<div class="card">
-					299
-				</div>
-				<a href="" target="_blank"></a>
-			</td>
-			<td>
-				<div class="card">
-					299
-				</div>
-
-				<a href="https://mythrillfiction.com/" target="_blank"></a>
-			</td>
-			<td>
-				<div class="card">
-					299
-				</div>
-
-				<a href="https://mythrillfiction.com/" target="_blank"></a>
-			</td>
-			<td>
-				<div class="card">
-					299
-				</div>
-
-				<a href="https://mythrillfiction.com/" target="_blank"></a>
-			</td>
-		</tr>
-	</table>
-	<table>
-		<tr class="">
-			<td class="td">
-				<div class="profile-card-ctr">
-					<button class="profile-card__button button--orange">Activate</button>
-				</div>
-			</td>
-			<td class="ts">
-				<div class="profile-card-ctr">
-					<button class="profile-card__button button--orange">Activate</button>
-				</div>
-			</td>
-			<td class="ts">
-				<div class="profile-card-ctr">
-					<button class="profile-card__button button--orange">Activate</button>
-				</div>
-			</td>
-			<td class="ts">
-				<div class="profile-card-ctr">
-					<button class="profile-card__button button--orange">Activate</button>
-				</div>
-			</td>
-		</tr>
-
-	</table>
-
+	<div class="con">
+		<div class="loader-weight">
+			<h1>Check Internet Speed</h1>
+			<span class="loader hide"></span>
+			<div class="loader-content">
+				<div class="content hide">24<small>Mbps</small></div>
+				<button type="button" id="mybt" onclick="start()">GO</button>
+			</div>
+		</div>
+	</div>
+	<div>
+		<h4 class="bot">By continuing past this page, you agree to our Terms of Service, Cookie Policy, Privacy Policy and
+			Content Policies. All trademarks are properties of their respective owners. 2023 © Bro Band™ Ltd. All rights
+			reserved.</h4>
+	</div>
+	</div>
+	</div>
+	<div id="particles-background" class="vertical-centered-box"></div>
+	<div id="particles-foreground" class="vertical-centered-box"></div>
+	<script src="loading.js"></script>
 	<script src="home.js"></script>
 
 </body>
