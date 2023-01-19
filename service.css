@@ -22,9 +22,6 @@
 .profile-card__img {
     width: 90px;
     height: 90px;
-    margin-top: 150px;
-    margin-left: 15px;
-    margin-right: 70px;
     transform: translateY(-50%);
     border-radius: 50%;
     overflow: hidden;
@@ -34,6 +31,16 @@
     flex-direction: row;
     float: left;
     box-shadow: 0px 5px 50px 0px #03e9f4, 0px 0px 0px 7px #243b55;
+}
+.card_content {
+	display:flex;
+	flex-direction:column;
+	gap:0.5rem;
+}
+.service_card {
+	display:flex;
+	gap:1rem;
+	align-items: center;
 }
 .first{
     margin-left: 650px;
