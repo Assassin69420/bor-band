@@ -217,7 +217,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			echo 						'$', $row['Plan_Amount'];
 			echo						'</h2>';
 			echo					'</div>';
-			echo					'<button; type="submit" class="profile-card__button button--orange" name="3">Activate</button>';
 			echo				'</div>';
 			echo			'</div>';
 		}

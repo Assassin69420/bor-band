@@ -1,8 +1,8 @@
 <?php
-include('db.php');
-include('services/broband_servies.php');
-include('services/plan_services.php');
-include('services/user_services.php');
+include('../db.php');
+include('broband_servies.php');
+include('plan_services.php');
+include('user_services.php');
 
 session_start();
 
@@ -31,13 +31,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 			/* exit; */
 			purchase_plan($plan_id, $user_id,  $db);
-			header("location: your_plans.php");
-		} else {
-			header("location: plans.php");
+			header("location: /your_plan.php");
 			exit;
 		}
 	} else {
-		header("location: plans.php");
+		header("location: /plans.php");
 		exit;
 	}
 } else {

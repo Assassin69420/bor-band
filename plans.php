@@ -105,11 +105,15 @@ $page = "plans";
 		}
 
 		.cards-table {
+			width: 80%;
 			margin-top: 10rem;
 			display: flex;
 			flex-direction: row;
 			gap: 1rem;
 			flex-wrap: wrap;
+			margin-left: auto;
+			margin-right: auto;
+			justify-content: center;
 		}
 
 		.plan-name {
@@ -186,7 +190,7 @@ $page = "plans";
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="your_plan.php" method="POST">
+	<form action="services/purchase_plan.php" method="POST">
 		<div class="cards-table">
 			<div class="plan-card">
 				<div class="profile-card-ctr">
