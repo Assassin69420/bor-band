@@ -5,6 +5,8 @@ session_start();
 
 $username = "";
 
+$page = "profile";
+
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$username = $_SESSION["username"];
@@ -104,47 +106,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 </head>
 
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-					<span class="glyphicon glyphicon-menu-hamburger"></span>
-				</button>
-
-
-				<div class="navbar-left logo">
-					<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 291 385.3" style="enable-background:new 0 0 291 385.3;" xml:space="preserve">
-						<style type="text/css">
-							.st0 {
-								fill: #000;
-							}
-						</style>
-						<polygon class="st0" points="82.1,12 7.4,138.7 38.7,237.3 " />
-						<polygon class="st0" points="92.7,5.3 199.4,8.7 223.4,82.7 " />
-						<polygon class="st0" points="89.4,8.7 223.4,86.7 42.1,237.3 " />
-						<polygon class="st0" points="206.1,15.3 262.7,66 228.1,82.7 " />
-						<polygon class="st0" points="262.7,70 228.1,86 266.4,175.3 " />
-						<polygon class="st0" points="228.1,92.7 262.7,179.3 173.4,328 " />
-						<polygon class="st0" points="223.4,92.7 44.7,240 167.7,336 " />
-						<polygon class="st0" points="252.1,210.3 184.4,380.3 170.7,339.7 " />
-						<polygon class="st0" points="60.1,260.3 167.4,341 180.4,380.3 " />
-					</svg>
-				</div>
-				<h1 class="brand brand-name navbar-left">
-					<div class="navbar-left">Bro Band
-				</h1>
-			</div>
-			<div class="collapse navbar-collapse navbar-right" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li><a href="index.html">Home</a></li>
-					<li><a href="service.php">Service</a></li>
-					<li><a href="plans.html">Plans</a></li>
-					<li><a href="profile.php" class="active">Profile</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-	<?php echo $user_info; ?>
+	<?php include_once 'components/navbar.php' ?>
 	<div class="wrapper">
 		<div class="profile-card js-profile-card">
 			<div class="profile-card__img">
@@ -152,7 +114,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			</div>
 
 			<div class="profile-card__cnt js-profile-cnt">
-				<div class="profile-card__name">Sunny</div>
+				<div class="profile-card__name">
+					<?php echo $user_info['U_name'] ?>
+				</div>
 				<div class="profile-card-loc">
 					<span class="profile-card-loc__icon">
 						<svg class="icon">
@@ -161,11 +125,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					</span>
 
 					<span class="profile-card-loc__txt">
-						Ms Palaya,Bangalore
+						<?php echo $user_info['U_address'] ?>
 					</span>
 				</div>
 				<div class="profile-card-ctr">
-					<button class="profile-card__button button--orange">Log Out</button>
+					<a href="services/logout.php">
+						<button class="profile-card__button button--orange">Log Out</button>
+					</a>
 				</div>
 			</div>
 			</form>
