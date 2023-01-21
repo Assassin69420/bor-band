@@ -1,37 +1,34 @@
 <?php
 // Include config file
 require_once "db.php";
+include 'services/user_services.php';
 
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$phone = $name = $address = $password = $confirm_password = "";
+$phone_err = $password_err = $confirm_password_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	// Validate username
-	if (empty(trim($_POST["username"]))) {
-		$username_err = "Please enter a username.";
-	} elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
-		$username_err = "Username can only contain letters, numbers, and underscores.";
+	if (empty(trim($_POST["phone"]))) {
+		$phone_err = "Please enter a phone number.";
+	} elseif (!preg_match('/^[0-9]+$/', trim($_POST["phone"]))) {
+		$phone_err = "phone number can only numbers";
 	} else {
 		// Prepare a select statement
-		$sql = "SELECT username FROM ulogin WHERE username = ?";
+		$sql = "SELECT user_id FROM ulogin WHERE phone = ?";
 
 		if ($stmt = mysqli_prepare($db, $sql)) {
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "s", $param_username);
-
-			// Set parameters
-			$param_username = trim($_POST["username"]);
-
-			// Attempt to execute the prepared statement
+			mysqli_stmt_bind_param($stmt, "s", $param_phone);
+			$param_phone = trim($_POST["phone"]);
 			if (mysqli_stmt_execute($stmt)) {
-				/* store result */
 				mysqli_stmt_store_result($stmt);
 				if (mysqli_stmt_num_rows($stmt) == 1) {
-					$username_err = "This username is already taken.";
+					$phone_err = "This phone number is already in use.";
 				} else {
-					$username = trim($_POST["username"]);
+					$phone = trim($_POST["phone"]);
+					$name = trim($_POST["name"]);
+					$address = trim($_POST["address"]);
+					$password = trim($_POST["password"]);
 				}
 			} else {
 				echo "Oops! Something went wrong. Please try again later.";
@@ -62,33 +59,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	// Check input errors before inserting in database
-	if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
-		// Prepare an insert statement
-		$sql = "INSERT INTO ulogin (username, password) VALUES (?, ?)";
-
-		if ($stmt = mysqli_prepare($db, $sql)) {
-			// Bind variables to the prepared statement as parameters
-			mysqli_stmt_bind_param($stmt, "ss", $param_username, $param_password);
-
-			// Set parameters
-			$param_username = $username;
-			$param_password = $password; // Creates a password hash
-
-			// Attempt to execute the prepared statement
-			if (mysqli_stmt_execute($stmt)) {
-				// Redirect to login page
-				header("location: register.php");
-			} else {
-				echo "Oops! Something went wrong. Please try again later.";
-			}
-
-			// Close statement
-			mysqli_stmt_close($stmt);
+	if (empty($phone_err) && empty($password_err) && empty($confirm_password_err)) {
+		try {
+			$user_id = register_user(phone: $phone, name: $name, address: $address, password: $password, db: $db);
+			header("location: login.php");
+		} catch (\Throwable $th) {
+			echo "Oops! Something went wrong. Please try again later.";
+			echo $th;
 		}
 	}
-
-	// Close connection
-	mysqli_close($db);
 }
 ?>
 
@@ -117,24 +96,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<p>Please fill this form to create an account.</p>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 			<div class="form-group">
-				<label>Username</label>
-				<input type="text" name="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-				<span class="invalid-feedback"><?php echo $username_err; ?></span>
+				<label>Phone number</label>
+				<input type="text" name="phone" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone; ?>">
+				<span class="invalid-feedback"><?php echo $phone_err; ?></span>
 			</div>
+
+			<div class="form-group">
+				<label>Name</label>
+				<input type="text" name="name" class="form-control" value="<?php echo $name; ?>">
+				<span class="invalid-feedback"></span>
+			</div>
+
+			<div class="form-group">
+				<label>Address</label>
+				<input type="text" name="address" class="form-control" value="<?php echo $address; ?>">
+				<span class="invalid-feedback"></span>
+			</div>
+
+
 			<div class="form-group">
 				<label>Password</label>
 				<input type="password" name="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
 				<span class="invalid-feedback"><?php echo $password_err; ?></span>
 			</div>
+
 			<div class="form-group">
 				<label>Confirm Password</label>
 				<input type="password" name="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
 				<span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
 			</div>
+
 			<div class="form-group">
 				<input type="submit" class="btn btn-primary" value="Submit">
 				<input type="reset" class="btn btn-secondary ml-2" value="Reset">
 			</div>
+
 			<p>Already have an account? <a href="login.php">Login here</a>.</p>
 		</form>
 	</div>

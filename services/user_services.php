@@ -1,27 +1,59 @@
 <?php
-function get_user_details($username, $db)
+function get_user_details(string $phone, mysqli $db)
 {
+
 	$data = null;
-	//connect to database
-	$sql = "SELECT U_id, Username, U_name, U_gender, U_address, U_phone FROM useraccount WHERE username = '${username}'";
+	$sql = "SELECT id as user_id, name, address from useraccount where phone='$phone'";
 
 	$res = mysqli_query($db, $sql);
-	$data = $res->fetch_assoc();
+	$data = $res->fetch_object();
 	return $data;
 }
 
-function get_customer_details($U_id, $db)
+function get_user_history(string $user_id, mysqli $db)
 {
-	$data = null;
-	//connect to database
-	$sql = "SELECT S.SerPName as provider_name ,S.sta_amount as service_amount, S.C_id as service_id
-								 Service.S_name as service_name, Service.S_city as service_city, Service.S_phone as service_phone, Service.Of_id as offer_id
-	 				FROM customers C
-						INNER JOIN serviceprovider S on S.SerPName = C.C_conn
-						INNER JOIN service as Service on Service.S_id = C.S_id
-				 	WHERE C.C_id = '${U_id}'";
+	$services_history = "SELECT US.user_id, S.service_name, US.service_period, US.date_of_purchase, S.cost as service_cost, US.service_id
+											FROM user_service_tracker US
+												INNER JOIN services	S on S.id = US.service_id
+											WHERE US.user_id = '$user_id'";
 
-	$res = mysqli_query($db, $sql);
-	$data = $res->fetch_assoc();
-	return $data;
+	$plans_history = "SELECT PS.user_id, PS.date_of_purchase, P.cost as plan_cost, PS.plan_id,
+													 P.plan_name, P.details, P.internet_speed, P.fup_limit
+									 FROM user_plan_tracker PS
+										 INNER JOIN internet_plans P on P.id = PS.plan_id
+									 WHERE PS.user_id = '$user_id'";
+
+	$services_res = mysqli_query($db, $services_history);
+	$plans_res = mysqli_query($db, $plans_history);
+
+	return array($services_res, $plans_res);
+}
+
+function register_user(string $phone, string $name, string $address, string $password, mysqli $db)
+{
+	$create_account_sql = "INSERT INTO useraccount
+													(name, address, phone)
+												VALUES
+													('$name','$address','$phone')";
+
+	$db->begin_transaction();
+	try {
+		$db->query($create_account_sql);
+		$user_id = $db->insert_id;
+		if (isset($user_id)) {
+			$create_login_sql = "INSERT INTO ulogin
+														(user_id, phone, password)
+													 VALUES
+														('$user_id','$phone','$password')";
+			$db->query($create_login_sql);
+			$db->commit();
+			return $user_id;
+		} else {
+			$db->rollback();
+			throw 'some error';
+		}
+	} catch (mysqli_sql_exception $exception) {
+		$db->rollback();
+		throw $exception;
+	}
 }

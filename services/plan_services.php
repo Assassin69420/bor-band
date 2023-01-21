@@ -1,28 +1,70 @@
 <?php
-function purchase_plan($plan_id, $customer_id, $db)
+function get_plan_details(string $plan_id, mysqli $db)
 {
-	$my_date = date("Y-m-d H:i:s");
-	$cust_insert_sql = "INSERT IGNORE INTO customers (C_id,C_conn,S_id) VALUES ('$customer_id',null,null)";
-	$plan_create_sql = "INSERT INTO customer_plan_tracker (customer_id,plan_id,date_of_purchase) VALUES ('$customer_id','$plan_id','$my_date')";
-	$db->begin_transaction();
+	$sql = "SELECT id, plan_name, details, internet_speed, cost, fup_limit, min_first_bill_period from internet_plans where id='$plan_id'";
+	$res = $db->query($sql);
+	return $res->fetch_object();
+}
+
+function get_service_details(string $service_id, mysqli $db)
+{
+	$sql = "SELECT id, service_name, cost from services where id='$service_id'";
+	$res = $db->query($sql);
+	return $res->fetch_object();
+}
+
+function purchase_plan(string $user_id, string $plan_id, mysqli $db)
+{
+	$plan_details = get_plan_details($plan_id, $db);
+
+	$track_plan_sql = "INSERT INTO user_plan_tracker (user_id,plan_id,date_of_purchase) VALUES ('$user_id','$plan_id',NOW())";
+	$create_bill_sql = "INSERT INTO bills
+												(user_id, amount, due_date, paid_date, related_service, related_plan, cgst_percentage, sgst_percentage)
+											VALUES
+												('$user_id','$plan_details->cost', NOW(), NOW(), null, '$plan_id', 9.5, 9.5)";
+
 	try {
-		mysqli_query($db, $cust_insert_sql);
-		mysqli_query($db, $plan_create_sql);
+		$db->query($track_plan_sql);
+		$db->query($create_bill_sql);
 		$db->commit();
+
+		$bill_id = $db->insert_id;
+		$bill_sql = "SELECT bill_id, user_id, amount, due_date,
+												paid_date, related_service, related_plan,
+												cgst_percentage, sgst_percentage FROM bills
+								 WHERE bill_id='$bill_id'";
+		$bill_res = $db->query($bill_sql);
+		return $bill_res->fetch_object();
 	} catch (mysqli_sql_exception $exception) {
 		$db->rollback();
 		throw $exception;
 	}
 }
 
-
-function get_active_plans($customer_id, $db)
+function purchase_service(string $user_id, string $service_id, null|string $service_period, mysqli $db)
 {
-	$sql = $db->prepare("SELECT P.Plan_Name, P.Plan_id, P.Plan_ending_Date, P.Plan_Amount FROM customer_plan_tracker CP
-						INNER JOIN plans P on P.Plan_id = CP.plan_id
-					WHERE CP.customer_id = ?");
-	$sql->bind_param('s', $customer_id);
-	$sql->execute();
-	$res = $sql->get_result();
-	return $res;
+	$service_details = get_service_details($service_id, $db);
+
+	$track_service_sql = "INSERT INTO user_service_tracker (user_id,service_id,service_period,date_of_purchase) VALUES ('$user_id','$service_id','$service_period',NOW())";
+	$create_bill_sql = "INSERT INTO bills
+												(user_id, amount, due_date, paid_date, related_service, related_plan, cgst_percentage, sgst_percentage)
+											VALUES
+												('$user_id','$service_details->cost', NOW(), NOW(), '$service_id', null, 9.5, 9.5)";
+
+	try {
+		$db->query($track_service_sql);
+		$db->query($create_bill_sql);
+		$db->commit();
+
+		$bill_id = $db->insert_id;
+		$bill_sql = "SELECT bill_id, user_id, amount, due_date,
+												paid_date, related_service, related_plan,
+												cgst_percentage, sgst_percentage FROM bills
+								 WHERE bill_id='$bill_id'";
+		$bill_res = $db->query($bill_sql);
+		return $bill_res->fetch_object();
+	} catch (mysqli_sql_exception $exception) {
+		$db->rollback();
+		throw $exception;
+	}
 }

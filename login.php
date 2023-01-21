@@ -10,14 +10,14 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 // Include config file
 require_once "db.php";
 
-$username = $password = "";
-$username_err = $password_err = $login_err = "";
+$phone = $password = "";
+$phone_err = $password_err = $login_err = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if (empty(trim($_POST["username"]))) {
-		$username_err = "Please enter username.";
+	if (empty(trim($_POST["phone"]))) {
+		$phone_err = "Please enter phone number.";
 	} else {
-		$username = trim($_POST["username"]);
+		$phone = trim($_POST["phone"]);
 	}
 
 	if (empty(trim($_POST["password"]))) {
@@ -26,32 +26,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$password = trim($_POST["password"]);
 	}
 
-	if (empty($username_err) && empty($password_err)) {
-		$sql = "SELECT username, password FROM ulogin WHERE username = ?";
+	if (empty($phone_err) && empty($password_err)) {
+		$sql = "SELECT user_id, phone, password FROM ulogin WHERE phone = ?";
 
 		if ($stmt = mysqli_prepare($db, $sql)) {
-			mysqli_stmt_bind_param($stmt, "s", $param_username);
+			mysqli_stmt_bind_param($stmt, "s", $param_phone);
 
-			$param_username = $username;
+			$param_phone = $phone;
 			if (mysqli_stmt_execute($stmt)) {
 				mysqli_stmt_store_result($stmt);
 				if (mysqli_stmt_num_rows($stmt) == 1) {
-					mysqli_stmt_bind_result($stmt, $username, $stored_password);
+					mysqli_stmt_bind_result($stmt, $user_id, $phone, $stored_password);
 					if (mysqli_stmt_fetch($stmt)) {
 						if ($password == $stored_password) {
 							session_start();
 
 							$_SESSION["loggedin"] = true;
-							$_SESSION["id"] = $id;
-							$_SESSION["username"] = $username;
+							$_SESSION["phone"] = $phone;
+							$_SESSION["user_id"] = $user_id;
 
 							header("location: index.php");
 						} else {
-							$login_err = "Invalid username or password.";
+							$login_err = "Invalid phone number or password.";
 						}
 					}
 				} else {
-					$login_err = "Invalid username or password.";
+					$login_err = "Invalid phone number or password.";
 				}
 			} else {
 				echo "Oops! Something went wrong. Please try again later.";
@@ -310,8 +310,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<h2>Login</h2>
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 			<div class="user-box">
-				<input type="text" name="username" required="true" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-				<label>Username</label>
+				<input type="text" name="phone" required="true" class="form-control <?php echo (!empty($phone_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $phone; ?>">
+				<label>Phone</label>
 			</div>
 			<div class="user-box">
 				<input type="password" name="password" required="true" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">

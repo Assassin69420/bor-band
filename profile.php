@@ -3,14 +3,14 @@ include('db.php');
 include('services/user_services.php');
 session_start();
 
-$username = "";
+$phone = "";
 
 $page = "profile";
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-	$username = $_SESSION["username"];
-	$user_info = get_user_details($username, $db);
+	$phone = $_SESSION["phone"];
+	$user_info = get_user_details($phone, $db);
 } else {
 	header("location: login.php");
 	exit;
@@ -109,13 +109,14 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<?php include_once 'components/navbar.php' ?>
 	<div class="wrapper">
 		<div class="profile-card js-profile-card">
+
 			<div class="profile-card__img">
 				<img src="https://res.cloudinary.com/muhammederdem/image/upload/v1537638518/Ba%C5%9Fl%C4%B1ks%C4%B1z-1.jpg" alt="profile card">
 			</div>
 
 			<div class="profile-card__cnt js-profile-cnt">
 				<div class="profile-card__name">
-					<?php echo $user_info['U_name'] ?>
+					<?php echo $user_info->name ?>
 				</div>
 				<div class="profile-card-loc">
 					<span class="profile-card-loc__icon">
@@ -125,7 +126,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					</span>
 
 					<span class="profile-card-loc__txt">
-						<?php echo $user_info['U_address'] ?>
+						<?php echo $user_info->address ?>
 					</span>
 				</div>
 				<div class="profile-card-ctr">
