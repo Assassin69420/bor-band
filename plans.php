@@ -2,7 +2,7 @@
 include('db.php');
 include('services/broband_servies.php');
 
-$all_plans = get_all_plans($db);
+$all_plans = get_all_offered_internet_plans($db);
 $page = "plans";
 ?>
 
@@ -15,82 +15,11 @@ $page = "plans";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MyWebsite</title>
 	<link rel="stylesheet" href="any.css">
-	<link rel="stylesheet" type="text/css" href="css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/layout.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
-
-
-		body {
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(#141e30, #243b55);
-			position: relative;
-		}
-
-		html {
-			width: 100%;
-			height: 100%;
-		}
-
-		.navbar {
-			background: linear-gradient(135deg, #141e30, #03e9f4, #141e30);
-			border: 0;
-			z-index: 9999;
-			letter-spacing: 4px;
-			overflow: hidden;
-			position: fixed;
-			height: 80px;
-
-		}
-
-		.logo {
-			display: block;
-			height: auto;
-			width: 52px;
-			padding-top: 5px;
-			margin-right: 15px;
-		}
-
-		.navbar-brand>img {
-			height: 100%;
-			padding: 15px;
-			/* firefox bug fix */
-			width: auto;
-		}
-
-		.navbar .nav>li>a {
-			line-height: 50px;
-			margin-top: 0px;
-		}
-
-		.navbar-header h1 {
-			letter-spacing: 1px;
-			color: black !important;
-			font-family: 'Lobster Two', cursive;
-		}
-
-		.navbar li a,
-		.navbar {
-			color: black !important;
-			font-size: 12px;
-			transition: all 0.6s 0s;
-		}
-
-		.navbar-toggle {
-			background-color: transparent !important;
-			border: 0;
-		}
-
-		.navbar-nav li a:hover,
-		.navbar-nav li a.active {
-			color: white !important;
-		}
 
 		.profile-card-ctr {
 			display: flex;
@@ -102,6 +31,7 @@ $page = "plans";
 			min-width: 10rem;
 			background: white;
 			border-radius: 3%;
+			gap: 1.5rem;
 		}
 
 		.cards-table {
@@ -109,7 +39,7 @@ $page = "plans";
 			margin-top: 10rem;
 			display: flex;
 			flex-direction: row;
-			gap: 1rem;
+			gap: 5rem;
 			flex-wrap: wrap;
 			margin-left: auto;
 			margin-right: auto;
@@ -185,43 +115,41 @@ $page = "plans";
 		.ts {
 			padding-left: 210px;
 		}
+
+		.plan_deets {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+		}
 	</style>
 </head>
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="services/purchase_plan.php" method="POST">
+	<form action="confirm_purchase.php" method="POST">
 		<div class="cards-table">
-			<div class="plan-card">
+			<?php
+			while ($obj = $all_plans->fetch_object()) {
+				echo '
 				<div class="profile-card-ctr">
 					<div class="card-info">
-						<h3 class="plan-name">
-							Monthly
-						</h3>
+						<h2 class="plan-name">
+'
+					. $obj->plan_name
+					. '
+						</h2>
+<div>
+<h4 class="plan_deets"><span>Speed</span><span>' . $obj->internet_speed . '</span></h4>
+<h4 class="plan_deets"><span>FUP limit</span><span>' . $obj->fup_limit . '</span></h4>
+<h4 class="plan_deets"><span>Min period</span><span>' . $obj->min_first_bill_period . '</span></h4>
+</div>
 					</div>
-					<button type="submit" class="profile-card__button button--orange" name="1">Activate</button>
-				</div>
-			</div>
-			<div class="plan-card">
-				<div class="profile-card-ctr">
-					<div class="card-info">
-						<h3 class="plan-name">
-							Quarterly
-						</h3>
-					</div>
-					<button type="submit" class="profile-card__button button--orange" name="2">Activate</button>
-				</div>
-			</div>
-			<div class="plan-card">
-				<div class="profile-card-ctr">
-					<div class="card-info">
-						<h3 class="plan-name">
-							Yearly
-						</h3>
-					</div>
-					<button type="submit" class="profile-card__button button--orange" name="3">Activate</button>
-				</div>
-			</div>
+<h4>₹' . $obj->cost . '</h4>
+					<input type="hidden" name="plan" value="' . $obj->id . '">
+					<button type="submit" class="profile-card__button button--orange">Activate</button>
+				</div>';
+			}
+			?>
 		</div>
 	</form>
 

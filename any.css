@@ -99,3 +99,32 @@ a {
 .tr{
   margin: 100px;
 }
+
+.profile-card-ctr {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 40px;
+			flex-direction: column;
+			min-height: 30rem;
+			min-width: 10rem;
+			background: white;
+			border-radius: 3%;
+		}
+
+		.cards-table {
+			width: 80%;
+			margin-top: 10rem;
+			display: flex;
+			flex-direction: row;
+			gap: 1rem;
+			flex-wrap: wrap;
+			margin-left: auto;
+			margin-right: auto;
+			justify-content: center;
+		}
+
+		.plan-name {
+			margin-top: 1.5rem;
+			padding: 2.5rem;
+		}

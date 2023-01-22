@@ -1,7 +1,6 @@
 <?php
 include('db.php');
-include('services/plan_services.php');
-include('services/user_services.php');
+include('services/bills_services.php');
 
 session_start();
 
@@ -12,7 +11,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$phone = $_SESSION["phone"];
 	$user_id = $_SESSION["user_id"];
 
-	$user_hist = get_user_history($user_id, $db);
+	if (isset($_POST["related_plan_id"]) && $_POST["related_plan_id"] !== '') {
+		$related_service_id = $_POST["related_service_id"];
+	} else if (isset($_POST["related_service_id"]) && $_POST["related_service_id"] !== '') {
+		$related_plan_id = $_POST["related_plan_id"];
+	}
+	$bills_res = get_bill_userplanid($related_plan_id, $related_service_id, $db);
 } else {
 	header("location: login.php");
 	exit;
@@ -153,12 +157,30 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<div class="cards-table">
 
 		<div class="plansservices_display">
-			<?php if ($user_hist[1]->num_rows > 0) : ?>
-				<h2 class="title">Active Services</h2>
+			<?php if ($bills_res->num_rows > 0) : ?>
+				<h2 class="title">Active Bills</h2>
 				<div class="plan-card">
 					<?php
-					while ($obj = $user_hist[1]->fetch_object()) {
+					while ($obj = $bills_res->fetch_object()) {
 						echo '
+<table>
+						<tr>
+							<td>Total Charges</td>
+							<td>₹' . $obj->amount . '</td>
+						</tr>
+						<tr>
+							<td>cgst 9.5%</td>
+							<td>₹<?php echo $total_cost * 0.095; ?></td>
+						</tr>
+						<tr>
+							<td>sgst 9.5%</td>
+							<td>₹<?php echo $total_cost * 0.095; ?></td>
+						</tr>
+						<tr>
+							<td>Total</td>
+							<td>₹<?php echo ($total_cost * 0.19) + (int) $total_cost; ?></td>
+						</tr>
+					</table>
 							<div class="profile-card-ctr">
 								<div class="card-info">
 									<h3 class="plan-name">' .

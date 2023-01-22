@@ -6,33 +6,22 @@ include('user_services.php');
 
 session_start();
 
-$username = "";
+$phone = "";
 $page = "plans";
 
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-	$username = $_SESSION["username"];
-	$plan_id = "";
+	$phone = $_SESSION["phone"];
+	$user_id = $_SESSION["user_id"];
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		if (isset($_POST["1"])) {
-			$plan_id = "1";
-		} else if (isset($_POST["2"])) {
-			$plan_id = "2";
-		} else if (isset($_POST["3"])) {
-			$plan_id = "3";
-		}
-
-		if (isset($plan_id) && $plan_id !== '') {
-			$user_res = get_user_details($username, $db);
-			$user_id = $user_res['U_id'];
-
-			echo var_dump($user_id);
-			echo var_dump($plan_id);
-
-			/* exit; */
-			purchase_plan($plan_id, $user_id,  $db);
+		if (isset($_POST["plan"]) && $_POST["plan"] !== '') {
+			$plan_id = $_POST["plan"];
+			purchase_plan(user_id: $user_id, plan_id: $plan_id, db: $db);
 			header("location: /your_plan.php");
-			exit;
+		} else if (isset($_POST["service"]) && $_POST["service"] !== '') {
+			$service_id = $_POST["service"];
+			purchase_service(user_id: $user_id, service_id: $service_id, service_period: null, db: $db);
+			header("location: /your_plan.php");
 		}
 	} else {
 		header("location: /plans.php");

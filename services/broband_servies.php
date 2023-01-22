@@ -1,18 +1,14 @@
 <?php
-function get_all_services($db)
+function get_all_offered_services(mysqli $db)
 {
-	//connect to database
-	$sql = "SELECT S_id, S_name, S_city, S_phone, S_amount, Of_id FROM service";
-
-	$res = mysqli_query($db, $sql);
+	$sql = "SELECT id, service_name, cost FROM services";
+	$res = $db->query($sql);
 	return $res;
 }
 
-function get_all_plans($db)
+function get_all_offered_internet_plans($db)
 {
-	//connect to database
-	$sql = "SELECT Plan_id, Plan_Name, Plan_starting_Date, Plan_ending_Date, Plan_amount FROM plans";
-
-	$res = mysqli_query($db, $sql);
+	$sql = "SELECT id, plan_name, details, internet_speed, cost, fup_limit, min_first_bill_period from internet_plans";
+	$res = $db->query($sql);
 	return $res;
 }

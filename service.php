@@ -2,7 +2,7 @@
 include('db.php');
 include('services/broband_servies.php');
 
-$all_services = get_all_services($db);
+$all_services = get_all_offered_services($db);
 $page = "service";
 ?>
 
@@ -15,81 +15,30 @@ $page = "service";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>MyWebsite</title>
 	<link rel="stylesheet" href="service.css">
-	<link rel="stylesheet" type="text/css" href="css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
-	<link rel="stylesheet" type="text/css" href="css/layout.css">
+	<link rel="stylesheet" href="profile.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+
 	<style>
-		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
-
-
-		body {
-			width: 100%;
-			height: 100%;
-			background: linear-gradient(#141e30, #243b55);
-
-		}
-
-		html {
-			width: 100%;
-			height: 100%;
-		}
-
-		.navbar {
-			background: linear-gradient(135deg, #141e30, #03e9f4, #141e30);
-			border: 0;
-			z-index: 9999;
-			letter-spacing: 4px;
-
-		}
-
-		.logo {
-			display: block;
-			height: auto;
-			width: 52px;
-			padding-top: 5px;
-			margin-right: 15px;
-		}
-
-		.navbar-brand>img {
-			height: 100%;
-			padding: 15px;
-			/* firefox bug fix */
-			width: auto;
-		}
-
-		.navbar .nav>li>a {
-			line-height: 50px;
-		}
-
-		.navbar-header h1 {
-			letter-spacing: 1px;
-			color: black !important;
-			font-family: 'Lobster Two', cursive;
-		}
-
-		.navbar li a,
-		.navbar {
-			color: black !important;
-			font-size: 12px;
-			transition: all 0.6s 0s;
-		}
-
-		.navbar-toggle {
-			background-color: transparent !important;
-			border: 0;
-		}
-
-		.navbar-nav li a:hover,
-		.navbar-nav li a.active {
-			color: white !important;
-		}
-
 		.service_card {
+			flex-grow: 0;
+			flex-direction: column;
 			align-items: flex-start;
+			align-items: center;
+			padding: 1rem;
+			background-color: white;
+			color: black;
+			border-radius: 4%;
+		}
+
+		.profile-card__button {
+			margin: unset !important;
+		}
+
+		.service_card_img img {
+			max-height: 100%;
+			max-width: 100%;
 		}
 
 		.service_card-container {
@@ -107,11 +56,13 @@ $page = "service";
 			height: 700px;
 			margin-right: auto;
 			margin-left: auto;
+			align-items: flex-start;
 		}
 
 		.label-text-container {
 			display: flex;
 			flex-direction: column;
+			align-items: center;
 			gap: 0.7rem;
 		}
 
@@ -119,32 +70,30 @@ $page = "service";
 			font-size: 17px;
 			font-weight: bold;
 		}
-
-		.label-value {
-			margin-left: 0.9rem;
-		}
 	</style>
 </head>
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<div class="service_card-container">
+	<form action="confirm_purchase.php" class="service_card-container" method="POST">
 		<?php
-		while ($row = $all_services->fetch_assoc()) {
-			echo '<div class="service_card">';
-			echo '<div class="profile-card__img">';
-			echo '<img src="https://mediaim.expedia.com/destination/1/2d75301e5fa5840846672492693f1fb3.jpg" alt="profile card">';
-			echo '</div>';
-			echo '<div class="card_content">';
-			echo '<p class="label-text-container"> <span class="label-text">Service Name </span> ', '<span class="label-value">', $row['S_name'], '</span>', '</p>';
-			echo '<p class="label-text-container"> <span class="label-text">City </span>', '<span class="label-value">', $row['S_city'], '</span>', '</p>';
-			echo '<p class="label-text-container"> <span class="label-text">Phone </span>', '<span class="label-value">', $row['S_phone'], '</span>', '</p>';
-			echo '<p class="label-text-container"> <span class="label-text">Amount </span>', '<span class="label-value">', $row['S_amount'], '</span>', '</p>';
-			echo '</div>';
-			echo '</div>';
+		while ($obj = $all_services->fetch_object()) {
+			echo '
+						 <div class="service_card">
+							 <p class="label-text-container"> 
+								<span class="label-text">Service Name </span>
+								<span class="label-value">' . $obj->service_name . '</span>
+							 </p>
+							 <p class="label-text-container">
+									<span class="label-text">Amount </span><span class="label-value">₹' . $obj->cost . '</span>
+							 </p>
+							 <input type="hidden" name="service" value="' . $obj->id . '">
+							 <button type="submit" class="profile-card__button button--orange">Purchase</button>
+						 </div>
+					  ';
 		}
 		?>
-	</div>
+	</form>
 
 </body>
 

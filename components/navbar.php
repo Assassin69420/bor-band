@@ -1,3 +1,70 @@
+<style>
+	@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
+
+
+	body {
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(#141e30, #243b55);
+
+	}
+
+	html {
+		width: 100%;
+		height: 100%;
+	}
+
+	.navbar {
+		background: linear-gradient(135deg, #141e30, #03e9f4, #141e30);
+		border: 0;
+		z-index: 9999;
+		letter-spacing: 4px;
+
+	}
+
+	.logo {
+		display: block;
+		height: auto;
+		width: 52px;
+		padding-top: 5px;
+		margin-right: 15px;
+	}
+
+	.navbar-brand>img {
+		height: 100%;
+		padding: 15px;
+		/* firefox bug fix */
+		width: auto;
+	}
+
+	.navbar .nav>li>a {
+		line-height: 50px;
+	}
+
+	.navbar-header h1 {
+		letter-spacing: 1px;
+		color: black !important;
+		font-family: 'Lobster Two', cursive;
+	}
+
+	.navbar li a,
+	.navbar {
+		color: black !important;
+		font-size: 12px;
+		transition: all 0.6s 0s;
+	}
+
+	.navbar-toggle {
+		background-color: transparent !important;
+		border: 0;
+	}
+
+	.navbar-nav li a:hover,
+	.navbar-nav li a.active {
+		color: white !important;
+	}
+</style>
+
 <?php
 include('db.php');
 
@@ -6,18 +73,10 @@ $isLoggedin = false;
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$isLoggedin = true;
-} ?>
-
-<nav class="navbar navbar-default navbar-fixed-top">
+} ?><nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-				<span class="glyphicon glyphicon-menu-hamburger"></span>
-			</button>
-
-
-			<div class="navbar-left logo">
-				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 291 385.3" style="enable-background:new 0 0 291 385.3;" xml:space="preserve">
+		<div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar"><span class="glyphicon glyphicon-menu-hamburger"></span></button>
+			<div class="navbar-left logo"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 291 385.3" style="enable-background:new 0 0 291 385.3;" xml:space="preserve">
 					<style type="text/css">
 						.st0 {
 							fill: #000;
