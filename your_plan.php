@@ -145,6 +145,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			display: flex;
 			align-items: center;
 		}
+
+		.plan-cards {
+			display: flex;
+			flex-direction: row;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
 	</style>
 </head>
 
@@ -155,7 +162,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		<div class="plansservices_display">
 			<?php if ($user_hist[1]->num_rows > 0) : ?>
 				<h2 class="title">Active Services</h2>
-				<div class="plan-card">
+				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[1]->fetch_object()) {
 						echo '
@@ -166,6 +173,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 									</h3>
 									<h2 class="plan-name">₹' .
 							$obj->plan_cost . '
+									</h2>
+									<h2 class="plan-name">' .
+							$obj->date_of_purchase . '
 									</h2>
 									<form action="bills.php" method="POST">
 										<button>View bills</button>
@@ -183,7 +193,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		<div class="plansservices_display">
 			<?php if ($user_hist[0]->num_rows > 0) : ?>
 				<h2 class="title">Active Services</h2>
-				<div class="plan-card">
+				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[0]->fetch_object()) {
 						echo '

@@ -35,22 +35,22 @@ CREATE TABLE services(
 CREATE TABLE user_plan_tracker(
     user_id INT NOT NULL,
     plan_id INT NOT NULL,
-    date_of_purchase DATE NOT NULL
+    date_of_purchase TIMESTAMP NOT NULL
 );
 
 CREATE TABLE user_service_tracker(
     user_id BIGINT NOT NULL,
     service_id BIGINT NOT NULL,
     service_period VARCHAR(255) NULL,
-    date_of_purchase DATE NOT NULL
+    date_of_purchase TIMESTAMP NOT NULL
 );
 
 CREATE TABLE bills(
     bill_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
     amount BIGINT NOT NULL,
-    due_date DATE NOT NULL,
-    paid_date DATE NULL,
+    due_date TIMESTAMP NOT NULL,
+    paid_date TIMESTAMP NULL,
     related_service INT NULL,
     related_plan INT NULL,
     cgst_percentage DOUBLE NOT NULL,
