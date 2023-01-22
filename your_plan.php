@@ -143,6 +143,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		.card-info {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 		}
 
