@@ -66,7 +66,7 @@
 </style>
 
 <?php
-include('db.php');
+$page ="";
 
 session_start();
 $isLoggedin = false;
