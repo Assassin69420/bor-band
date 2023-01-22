@@ -162,7 +162,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		<div class="plansservices_display">
 			<?php if ($user_hist[1]->num_rows > 0) : ?>
-				<h2 class="title">Active Services</h2>
+				<h2 class="title">Active Plans</h2>
 				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[1]->fetch_object()) {
