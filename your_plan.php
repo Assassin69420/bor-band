@@ -164,7 +164,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 									<h3 class="plan-name">' .
 							$obj->plan_name . '
 									</h3>
-									<h2 class="plan-name">$' .
+									<h2 class="plan-name">₹' .
 							$obj->plan_cost . '
 									</h2>
 									<form action="bills.php" method="POST">

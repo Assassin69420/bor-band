@@ -126,12 +126,12 @@ $page = "plans";
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="confirm_purchase.php" method="POST">
+	<div>
 		<div class="cards-table">
 			<?php
 			while ($obj = $all_plans->fetch_object()) {
 				echo '
-				<div class="profile-card-ctr">
+				<form class="profile-card-ctr" action="confirm_purchase.php" method="POST">
 					<div class="card-info">
 						<h2 class="plan-name">
 '
@@ -147,11 +147,11 @@ $page = "plans";
 <h4>₹' . $obj->cost . '</h4>
 					<input type="hidden" name="plan" value="' . $obj->id . '">
 					<button type="submit" class="profile-card__button button--orange">Activate</button>
-				</div>';
+				</form>';
 			}
 			?>
 		</div>
-	</form>
+	</div>
 
 	<script src="home.js"></script>
 

@@ -75,11 +75,11 @@ $page = "service";
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="confirm_purchase.php" class="service_card-container" method="POST">
+	<div class="service_card-container">
 		<?php
 		while ($obj = $all_services->fetch_object()) {
 			echo '
-						 <div class="service_card">
+						 <form class="service_card" action="confirm_purchase.php" method="POST">
 							 <p class="label-text-container"> 
 								<span class="label-text">Service Name </span>
 								<span class="label-value">' . $obj->service_name . '</span>
@@ -89,11 +89,11 @@ $page = "service";
 							 </p>
 							 <input type="hidden" name="service" value="' . $obj->id . '">
 							 <button type="submit" class="profile-card__button button--orange">Purchase</button>
-						 </div>
+						 </form>
 					  ';
 		}
 		?>
-	</form>
+	</div>
 
 </body>
 
