@@ -57,11 +57,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			gap: 1rem;
 		}
 
-		.plan-name {
-			margin-top: 1.5rem;
-			padding: 2.5rem;
-		}
-
 		@media screen and (max-width: 576px) {
 			.profile-card-ctr {
 				flex-wrap: wrap;
@@ -153,6 +148,49 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			gap: 1rem;
 			flex-wrap: wrap;
 		}
+
+		.plansservice_card {
+			color: black;
+			display: flex;
+			flex-direction: column;
+			background: white;
+			border-radius: 4%;
+			border: 1px solid white;
+			padding: 2rem;
+			align-items: flex-start;
+			gap: 3rem;
+		}
+
+		.stats {
+			align-self: stretch;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			justify-content: space-between;
+			column-gap: 10rem;
+		}
+
+		.plan-status {
+			padding: 0.5rem 1rem;
+			background-color: #ADE792;
+			color: #379237;
+			border-top-left-radius: 55% 45px;
+			border-bottom-left-radius: 55% 45px;
+			border-top-right-radius: 55% 45px;
+			border-bottom-right-radius: 55% 45px;
+			text-align: center;
+		}
+
+		.plan-name {
+			line-height: 4rem;
+			margin: unset;
+			font-weight: bold;
+			font-size: 25px;
+		}
+
+		.plan-name span {
+			display: block;
+			font-size: 30px;
+		}
 	</style>
 </head>
 
@@ -160,66 +198,87 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<?php include_once 'components/navbar.php' ?>
 	<div class="cards-table">
 
-		<div class="plansservices_display">
-			<?php if ($user_hist[1]->num_rows > 0) : ?>
+		<?php if ($user_hist[1]->num_rows > 0) : ?>
+			<div class="plansservices_display">
 				<h2 class="title">Active Plans</h2>
 				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[1]->fetch_object()) {
 						echo '
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
+							<div class="plansservice_card">
+									<span class="plan-status">🗸 ACTIVE</span>
+									<h2 class="plan-name">
+										Your current plan is:
+										<span>
+										' .
 							$obj->plan_name . '
-									</h3>
-									<h2 class="plan-name">₹' .
+										</span>
+									</h2>
+
+									<div class="stats">
+										<p class="stat">Speed: ' .
+							$obj->internet_speed . 'Mbps
+										</p>
+										<p class="stat">FUP Limit: ' .
+							$obj->fup_limit . '
+										</p>
+										<p class="stat">Tarrif: ₹' .
 							$obj->plan_cost . '
-									</h2>
-									<h2 class="plan-name">' .
-							$obj->date_of_purchase . '
-									</h2>
+										</p>
+										<p class="stat">Billing: ' .
+							$obj->min_first_bill_period . '
+										</p>
+									</div>
+
 									<form action="bills.php" method="POST">
-										<button>View bills</button>
+										<button>View bill</button>
 										<input type="hidden" name="related_plan_id" value="' . $obj->plan_id . '">
 									</form>
-								</div>
 							</div>
 						';
 					}
 					?>
 				</div>
-			<?php endif ?>
-		</div>
+			</div>
+		<?php endif ?>
 
-		<div class="plansservices_display">
-			<?php if ($user_hist[0]->num_rows > 0) : ?>
+		<?php if ($user_hist[0]->num_rows > 0) : ?>
+			<div class="plansservices_display">
 				<h2 class="title">Active Services</h2>
 				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[0]->fetch_object()) {
 						echo '
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
-							$obj->service_name . '
-									</h3>
-									<h2 class="plan-name">₹' .
-							$obj->service_cost . '
-									</h2>
+							<div class="plansservice_card">
+									<span class="plan-status">🗸 ACTIVE</span>
 									<h2 class="plan-name">
-									<form action="bills.php" method="POST">
-										<button>View bills</button>
-										<input type="hidden" name="related_service_id" value="' . $obj->service_id . '">
-									</form>
+										Your current service is:
+										<span>
+										' .
+							$obj->service_name . '
+										</span>
 									</h2>
-								</div>
+
+									<div class="stats">
+										<p class="stat">Tarrif: ₹' .
+							$obj->service_cost . '
+										</p>
+										<p class="stat">Date of purchase: ' .
+							$obj->date_of_purchase . '
+										</p>
+									</div>
+
+									<form action="bills.php" method="POST">
+										<button>View bill</button>
+										<input type="hidden" name="related_plan_id" value="' . $obj->plan_id . '">
+									</form>
 							</div>
 						';
 					}
 					?>
 				</div>
-			<?php endif ?>
-		</div>
+			</div>
+		<?php endif ?>
 	</div>
 
 	<script src="home.js"></script>

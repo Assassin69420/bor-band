@@ -13,11 +13,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$related_service_id = $related_plan_id = "";
 
 	if (isset($_POST["related_plan_id"]) && $_POST["related_plan_id"] !== '') {
-		$related_service_id = $_POST["related_service_id"];
-	} else if (isset($_POST["related_service_id"]) && $_POST["related_service_id"] !== '') {
 		$related_plan_id = $_POST["related_plan_id"];
+	} else if (isset($_POST["related_service_id"]) && $_POST["related_service_id"] !== '') {
+		$related_service_id = $_POST["related_service_id"];
 	}
-	$bills_res = get_bill_userplanid($related_plan_id, $related_service_id, $db);
+
+	$bill = get_bill_userplanid(related_plan_id: $related_plan_id, related_service_id: $related_service_id, db: $db);
+	$cgst_amount = ($bill->cgst_percentage / 100) * $bill->amount;
+	$sgst_amount = ($bill->sgst_percentage / 100) * $bill->amount;
+	$total_cost = $cgst_amount + $sgst_amount + $bill->amount;
 } else {
 	header("location: login.php");
 	exit;
@@ -43,7 +47,13 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
 
+		td {
+			padding: 2rem;
+			border: 1px solid black;
+		}
+
 		.profile-card-ctr {
+			color: black;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -53,6 +63,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			min-width: 10rem;
 			background: white;
 			border-radius: 3%;
+			padding: 0 5rem;
 		}
 
 		.cards-table {
@@ -144,6 +155,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			align-items: center;
 			justify-content: center;
 			flex-grow: 0;
+			color: white;
 		}
 
 		.card-info {
@@ -155,87 +167,36 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<div class="cards-table">
+	<section class="cards-table">
 
 		<div class="plansservices_display">
-			<?php if ($bills_res->num_rows > 0) : ?>
-				<h2 class="title">Active Bills</h2>
-				<div class="plan-card">
-					<?php
-					while ($obj = $bills_res->fetch_object()) {
-						echo '
-<table>
+			<div class="profile-card-ctr">
+				<h1>Name: <?php echo $bill->username ?></h1>
+				<h1>Account id: <?php echo $bill->account_id ?></h1>
+				<h1><?php echo $bill->ps_name ?></h1>
+				<div class="card-info">
+					<table>
 						<tr>
 							<td>Total Charges</td>
-							<td>₹' . $obj->amount . '</td>
+							<td>₹<?php echo $bill->amount ?></td>
 						</tr>
 						<tr>
 							<td>cgst 9.5%</td>
-							<td>₹<?php echo $total_cost * 0.095; ?></td>
+							<td>₹<?php echo $cgst_amount; ?></td>
 						</tr>
 						<tr>
 							<td>sgst 9.5%</td>
-							<td>₹<?php echo $total_cost * 0.095; ?></td>
+							<td>₹<?php echo $sgst_amount; ?></td>
 						</tr>
 						<tr>
 							<td>Total</td>
-							<td>₹<?php echo ($total_cost * 0.19) + (int) $total_cost; ?></td>
+							<td>₹<?php echo $total_cost; ?></td>
 						</tr>
 					</table>
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
-							$obj->plan_name . '
-									</h3>
-									<h2 class="plan-name">$' .
-							$obj->plan_cost . '
-									</h2>
-									<form action="bills.php" method="POST">
-										<button>View bills</button>
-										<input type="hidden" name="related_plan_id" value"' . $obj->plan_id . '">
-									</form>
-								</div>
-							</div>
-						';
-					}
-					?>
 				</div>
-			<?php endif ?>
+			</div>
 		</div>
-
-		<div class="plansservices_display">
-			<?php if ($user_hist[0]->num_rows > 0) : ?>
-				<h2 class="title">Active Services</h2>
-				<div class="plan-card">
-					<?php
-					while ($obj = $user_hist[0]->fetch_object()) {
-						echo '
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
-							$obj->service_name . '
-									</h3>
-									<h2 class="plan-name">₹' .
-							$obj->service_cost . '
-									</h2>
-									<h2 class="plan-name">
-									<form action="bills.php" method="POST">
-										<button>View bills</button>
-										<input type="hidden" name="related_service_id" value"' . $obj->service_id . '">
-									</form>
-									</h2>
-								</div>
-							</div>
-						';
-					}
-					?>
-				</div>
-			<?php endif ?>
-		</div>
-	</div>
-
-	<script src="home.js"></script>
-
+	</section>
 </body>
 
 </html>

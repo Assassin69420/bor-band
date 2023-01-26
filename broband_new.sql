@@ -32,19 +32,6 @@ CREATE TABLE services(
 		PRIMARY KEY(id)
 );
 
-CREATE TABLE user_plan_tracker(
-    user_id INT NOT NULL,
-    plan_id INT NOT NULL,
-    date_of_purchase TIMESTAMP NOT NULL
-);
-
-CREATE TABLE user_service_tracker(
-    user_id BIGINT NOT NULL,
-    service_id BIGINT NOT NULL,
-    service_period VARCHAR(255) NULL,
-    date_of_purchase TIMESTAMP NOT NULL
-);
-
 CREATE TABLE bills(
     bill_id INT NOT NULL AUTO_INCREMENT,
     user_id INT NOT NULL,
@@ -53,9 +40,27 @@ CREATE TABLE bills(
     paid_date TIMESTAMP NULL,
     related_service INT NULL,
     related_plan INT NULL,
+		offer_id INT NULL,
     cgst_percentage DOUBLE NOT NULL,
     sgst_percentage DOUBLE NOT NULL,
 		PRIMARY KEY(bill_id)
+);
+
+CREATE TABLE user_plan_tracker(
+    user_id INT NOT NULL,
+    plan_id INT NOT NULL,
+		purchase_bill INT NOT NULL,
+    date_of_purchase TIMESTAMP NOT NULL,
+		FOREIGN KEY(purchase_bill) REFERENCES bills(bill_id)
+);
+
+CREATE TABLE user_service_tracker(
+    user_id BIGINT NOT NULL,
+    service_id BIGINT NOT NULL,
+    service_period VARCHAR(255) NULL,
+		purchase_bill INT NOT NULL,
+    date_of_purchase TIMESTAMP NOT NULL,
+		FOREIGN KEY(purchase_bill) REFERENCES bills(bill_id)
 );
 
 CREATE TABLE offers(
