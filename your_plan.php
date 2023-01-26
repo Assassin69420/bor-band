@@ -180,7 +180,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 									</h2>
 									<form action="bills.php" method="POST">
 										<button>View bills</button>
-										<input type="hidden" name="related_plan_id" value"' . $obj->plan_id . '">
+										<input type="hidden" name="related_plan_id" value="' . $obj->plan_id . '">
 									</form>
 								</div>
 							</div>
@@ -209,7 +209,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 									<h2 class="plan-name">
 									<form action="bills.php" method="POST">
 										<button>View bills</button>
-										<input type="hidden" name="related_service_id" value"' . $obj->service_id . '">
+										<input type="hidden" name="related_service_id" value="' . $obj->service_id . '">
 									</form>
 									</h2>
 								</div>
