@@ -10,6 +10,7 @@ $phone = "";
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$phone = $_SESSION["phone"];
 	$user_id = $_SESSION["user_id"];
+	$related_service_id = $related_plan_id = "";
 
 	if (isset($_POST["related_plan_id"]) && $_POST["related_plan_id"] !== '') {
 		$related_service_id = $_POST["related_service_id"];

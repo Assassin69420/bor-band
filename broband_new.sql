@@ -76,10 +76,6 @@ ALTER TABLE
 ALTER TABLE
     user_plan_tracker ADD CONSTRAINT user_plan_tracker_plan_id_foreign FOREIGN KEY(plan_id) REFERENCES internet_plans(id);
 ALTER TABLE
-    internet_plans ADD CONSTRAINT internet_plans_offer_id_foreign FOREIGN KEY(offer_id) REFERENCES offers(id);
-ALTER TABLE
-    services ADD CONSTRAINT services_offer_id_foreign FOREIGN KEY(offer_id) REFERENCES offers(id);
-ALTER TABLE
     bills ADD CONSTRAINT bills_user_id_foreign FOREIGN KEY(user_id) REFERENCES useraccount(id);
 ALTER TABLE
     bills ADD CONSTRAINT bills_related_service_foreign FOREIGN KEY(related_service) REFERENCES services(id);
