@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (empty(trim($_POST["phone"]))) {
 		$phone_err = "Please enter a phone number.";
 	} elseif (!preg_match('/^[0-9]+$/', trim($_POST["phone"]))) {
-		$phone_err = "phone number can only numbers";
+		$phone_err = "phone number can have only numbers";
 	} else {
 		// Prepare a select statement
 		$sql = "SELECT user_id FROM ulogin WHERE phone = ?";

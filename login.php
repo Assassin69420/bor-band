@@ -324,6 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<span></span>
 				Submit
 			</button>
+			<p>Don't have an account? <a href="register.php">register here</a>.</p>
 		</form>
 	</div>
 	<div id="particles-background" class="vertical-centered-box"></div>
