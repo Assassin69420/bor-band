@@ -32,20 +32,18 @@ function get_user_history(string $user_id, mysqli $db)
 function register_user(string $phone, string $name, string $address, string $password, mysqli $db)
 {
 	$create_account_sql = "INSERT INTO useraccount
-													(name, address, phone)
+													(id, name, address, phone)
 												VALUES
-													('$name','$address','$phone')";
+													(DEFAULT, '$name','$address','$phone')";
 
 	$db->begin_transaction();
 	try {
-		$db->query($create_account_sql);
+		$res = $db->query($create_account_sql);
 		$user_id = $db->insert_id;
 		if (isset($user_id)) {
-			$create_login_sql = "INSERT INTO ulogin
-														(user_id, phone, password)
-													 VALUES
-														('$user_id','$phone','$password')";
-			$db->query($create_login_sql);
+			$sql = 'SELECT * FROM useraccount';
+			$create_login_sql = "INSERT INTO ulogin (user_id, phone, password) VALUES ('$user_id','$phone','$password')";
+			$u_res = $db->query($create_login_sql);
 			$db->commit();
 			return $user_id;
 		} else {

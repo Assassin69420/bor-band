@@ -1,5 +1,5 @@
 CREATE TABLE useraccount (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     phone BIGINT NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE useraccount (
 );
 
 CREATE TABLE ulogin (
-    user_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
     phone BIGINT NOT NULL,
     password VARCHAR(255) NOT NULL,
 		PRIMARY KEY(user_id,phone)
