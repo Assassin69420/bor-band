@@ -23,7 +23,7 @@ function enter_services(int $id, string $service_name, int $cost, mysqli $db){
 	$enter_service_sql = " INSERT INTO 
 									services(id, service_name, cost) 
 													VALUES
-							(DEFAULT, '$service_name', "$cost"); "
+							(DEFAULT, '$service_name', $cost); "
 	
 	$db->begin_transaction();
 	try {
