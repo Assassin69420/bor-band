@@ -11,6 +11,7 @@ CREATE TABLE ulogin (
     user_id INT NOT NULL,
     phone BIGINT NOT NULL,
     password VARCHAR(255) NOT NULL,
+		is_admin BOOLEAN DEFAULT false,
 		PRIMARY KEY(user_id,phone)
 );
 

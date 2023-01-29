@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if (empty($phone_err) && empty($password_err)) {
-		$sql = "SELECT user_id, phone, password FROM ulogin WHERE phone = ?";
+		$sql = "SELECT user_id, phone, password, is_admin FROM ulogin WHERE phone = ?";
 
 		if ($stmt = mysqli_prepare($db, $sql)) {
 			mysqli_stmt_bind_param($stmt, "s", $param_phone);
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			if (mysqli_stmt_execute($stmt)) {
 				mysqli_stmt_store_result($stmt);
 				if (mysqli_stmt_num_rows($stmt) == 1) {
-					mysqli_stmt_bind_result($stmt, $user_id, $phone, $stored_password);
+					mysqli_stmt_bind_result($stmt, $user_id, $phone, $stored_password, $is_admin);
 					if (mysqli_stmt_fetch($stmt)) {
 						if ($password == $stored_password) {
 							session_start();
@@ -44,8 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							$_SESSION["loggedin"] = true;
 							$_SESSION["phone"] = $phone;
 							$_SESSION["user_id"] = $user_id;
+							$_SESSION["is_admin"] = $is_admin;
 
-							header("location: index.php");
+							if ($is_admin) {
+								header("location: components/admin.php");
+							} else {
+								header("location: index.php");
+							}
 						} else {
 							$login_err = "Invalid phone number or password.";
 						}
@@ -304,18 +309,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			background-image: -webkit-linear-gradient(45deg, #141e30, #243b55);
 			background-image: linear-gradient(45deg, #141e30, #243b55);
 		}
-		.reset{
-	margin-left: 70px;
-}
-p {
-	color: white;
-	margin-top: 30px;
-	text-align: center;
-}
-p a{
-	color: #03e9f4;
-	text-decoration: none;
-}
+
+		.reset {
+			margin-left: 70px;
+		}
+
+		p {
+			color: white;
+			margin-top: 30px;
+			text-align: center;
+		}
+
+		p a {
+			color: #03e9f4;
+			text-decoration: none;
+		}
 	</style>
 </head>
 
