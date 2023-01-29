@@ -69,7 +69,7 @@
 </style>
 
 <?php
-//$page ="";
+$page ="";
 
 session_start();
 $isLoggedin = false;
