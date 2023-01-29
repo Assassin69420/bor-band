@@ -16,7 +16,7 @@ $service_name=$cost="";
 $plan_name=$speed=$fup_limit=$min_first_bill_period="";
 
 $details='[]';
-
+//Those are the queries, post method is supposed to be used, I haven't.
 //Inserting into the service table for the interface in the admin panel at /components/adminservice.html.
 
 function enter_services(int $id, string $service_name, int $cost, mysqli $db){
