@@ -62,7 +62,7 @@ function enter_plans(int $id, string $plan_name, json $details, int $speed, int 
 //For Displaying all the user details in the Admin panel at /components/adminUsers.html.
 
 function display_users(string $id, mysqli $db){
-	$Display_users_sql = "SELECT * FROM useraccount where id = ?;"
+	$Display_users_sql = "SELECT * FROM useraccount;"
 	
 	$Display_res = mysqli_query($db, $Display_users_sql);
 	
