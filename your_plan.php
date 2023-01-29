@@ -1,4 +1,5 @@
 <?php
+$page = 'your_plan';
 include('db.php');
 include('services/plan_services.php');
 include('services/user_services.php');
@@ -342,7 +343,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 									<form action="bills.php" method="POST">
 										<button class="profile-card__button button--orange  side">View bill</button>
-										<input type="hidden" name="related_plan_id" value="' . $obj->service_id . '">
+										<input type="hidden" name="related_service_id" value="' . $obj->service_id . '">
 									</form>
 							</div>
 						';
