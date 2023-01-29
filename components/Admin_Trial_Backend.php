@@ -64,7 +64,7 @@ function enter_plans(int $id, string $plan_name, json $details, int $speed, int 
 function display_users(string $id, mysqli $db){
 	$Display_users_sql = "SELECT * FROM useraccount where id = ?;"
 	
-	$Display_res = mysqli_query($db, $Display_users);
+	$Display_res = mysqli_query($db, $Display_users_sql);
 	
 	return $Display_res;
 
