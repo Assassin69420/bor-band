@@ -1,11 +1,13 @@
+
+
+<?php
+
 //The admin panel is separated into 4 html files for the home page->admin.html, plans->adminplans.html
 //for service->adminservice.html and for users->adminUsers.html.
 
 //A basic interface where we simply enter the values for creating new services and plans rather than inserting with query in the database.
 
 //Viewing Users who have registered into the database.
-
-<?php
 
 include('../db.php');
 
