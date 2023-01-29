@@ -149,89 +149,7 @@
         margin-left: 78px;
         margin-top: 80px;
         margin-bottom: 45px; }
-      .body-wrapper .panel .view .health-charts {
-        max-width: 600px;
-        height: auto; }
-        .body-wrapper .panel .view .health-charts .chart {
-          position: relative;
-          width: 33.33%;
-          height: auto;
-          float: left;
-          text-align: center; }
-          .body-wrapper .panel .view .health-charts .chart .title {
-            font-size: 14px;
-            line-height: 10px;
-            color: #03e9f4; }
-          .body-wrapper .panel .view .health-charts .chart .info {
-            position: relative;
-            width: 100%; }
-            .body-wrapper .panel .view .health-charts .chart .info .percentage {
-              line-height: 96px;
-              color: #03e9f4;
-              background-size: contain;
-              background-repeat: no-repeat;
-              background-position: center;
-              margin-top: 33px; }
-          .body-wrapper .panel .view .health-charts .chart.system .info .percentage {
-            background-image: url(https://raw.githubusercontent.com/mhmoodlan/Designs-to-Code/master/Admin-Panel/assets/img/chart-1.png); }
-          .body-wrapper .panel .view .health-charts .chart.network .info .percentage {
-            background-image: url(https://raw.githubusercontent.com/mhmoodlan/Designs-to-Code/master/Admin-Panel/assets/img/chart-2.png); }
-          .body-wrapper .panel .view .health-charts .chart.storage .info .percentage {
-            background-image: url(https://raw.githubusercontent.com/mhmoodlan/Designs-to-Code/master/Admin-Panel/assets/img/chart-3.png); }
-    .body-wrapper .panel .general-settings .set {
-      margin-bottom: 25px; }
-      .body-wrapper .panel .general-settings .set .title {
-        font-size: 13px;
-        color: #7f8818;
-        float: left;
-        line-height: 20px; }
-      .body-wrapper .panel .general-settings .set .value {
-        font-size: 13px;
-        color: #7f8818;
-        line-height: 20px;
-        margin-left: 40px;
-        float: left; }
-        .body-wrapper .panel .general-settings .set .value .current {
-          float: left; }
-          .body-wrapper .panel .general-settings .set .value .current .numbers,
-          .body-wrapper .panel .general-settings .set .value .current .extra {
-            float: left; }
-          .body-wrapper .panel .general-settings .set .value .current .extra {
-            font-size: 8px;
-            line-height: 20px;
-            margin-left: 5px; }
-        .body-wrapper .panel .general-settings .set .value .change {
-          float: left;
-          font-size: 8px;
-          color: #03e9f4;
-          text-decoration: underline;
-          line-height: 20px;
-          margin-left: 12px;
-          cursor: pointer; }
-          .body-wrapper .panel .general-settings .set .value .change:hover {
-            color: #03e9f4; }
-        .body-wrapper .panel .general-settings .set .value select {
-          border: none;
-          color: #03e9f4;
-          border-bottom: 1px solid #7f8818;
-          font-size: 12px; }
-          .body-wrapper .panel .general-settings .set .value select:focus {
-            outline: none; }
 
-.clear-fix {
-  clear: both; }
-
-::selection {
-  background: #03e9f4; }
-
-::-moz-selection {
-  background: #03e9f4; }
-
-img::selection {
-  background: transparent; }
-
-img::-moz-selection {
-  background: transparent; }
 
 body {
   -webkit-tap-highlight-color: #03e9f4; }
@@ -242,6 +160,56 @@ body {
 .list .selected a{
     font-size: 12px;
     color: solid #141e30;
+}
+.profile-card__button {
+	 background: none;
+	 border: none;
+	 font-family: "Quicksand", sans-serif;
+	 font-weight: 700;
+	 font-size: 15px;
+	 min-width: 100px;
+   margin-right: 20px;
+	 border-radius: 50px;
+	 min-height: 55px;
+	 color: #fff;
+	 cursor: pointer;
+	 backface-visibility: hidden;
+	 transition: all 0.3s;
+}
+.profile-card__button.button--orange {
+	 background: linear-gradient(45deg, #141e30, #243b55);
+	 box-shadow: 0px 4px 30px #141e30;
+}
+@media screen and (max-width: 768px) {
+	 .profile-card__button {
+		 min-width: 170px;
+	}
+}
+ @media screen and (max-width: 576px) {
+	 .profile-card__button {
+		 min-width: inherit;
+		 margin: 0;
+		 margin-bottom: 16px;
+		 width: 100%;
+		 max-width: 300px;
+	}
+	 .profile-card__button:last-child {
+		 margin-bottom: 0;
+	}
+}
+ .profile-card__button:focus {
+	 outline: none !important;
+}
+ @media screen and (min-width: 768px) {
+	 .profile-card__button:hover {
+		 transform: translateY(-5px);
+	}
+}
+.green:hover {
+	 box-shadow: 0px 7px 30px green;
+}
+.red:hover {
+	 box-shadow: 0px 7px 30px red;
 }
 
 
@@ -264,6 +232,9 @@ body {
           <div class="sub-title">ADMIN PANEL</div>
           <div class="main-title">Services</div>
           <div class="seperator"></div> 
+          <div>
+            <button class="profile-card__button button--orange green">ADD</button>
+            <button class="profile-card__button button--orange red">REMOVE</button>
           </div>
         </div>
         <div class="clear-fix"></div>
