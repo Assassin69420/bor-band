@@ -20,7 +20,10 @@ $details='[]';
 //Inserting into the service table for the interface in the admin panel at /components/adminservice.html.
 
 function enter_services(int $id, string $service_name, int $cost, mysqli $db){
-	$enter_service_sql = INSERT INTO services(id, service_name, cost) VALUES(DEFAULT, '$service_name', "$cost");
+	$enter_service_sql = " INSERT INTO 
+									services(id, service_name, cost) 
+													VALUES
+							(DEFAULT, '$service_name', "$cost"); "
 	
 	$db->begin_transaction();
 	try {
@@ -41,8 +44,13 @@ function enter_services(int $id, string $service_name, int $cost, mysqli $db){
 //Inserting into the internet_plans table for the interface in the admin panel at /components/adminplans.html. 
 
 function enter_plans(int $id, string $plan_name, json $details, int $speed, int $cost, int $fup_limit, enum $min_bill_period, mysqli $db){
-	$enter_plan_sql = INSERT INTO insert_plans(id, plan_name, details, internet_speed, cost, fup_limit, min_first_bill_period) VALUES(DEFAULT, '$plan_name', $details, $speed, $cost, $fup_limt, $min_first_bill_period);
+	$enter_plan_sql = "INSERT INTO 
+						insert_plans(id, plan_name, details, internet_speed, cost, fup_limit, min_first_bill_period) 
+														VALUES
+						(DEFAULT, '$plan_name', $details, $speed, $cost, $fup_limt, $min_first_bill_period);
 	
+	
+	"
 		$db->begin_transaction();
 	try {
 		$service_in_res = $db->query($enter_plan_sql);
