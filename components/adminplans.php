@@ -236,10 +236,11 @@ if (isset($_POST['add_plan'])) {
 		font-family: "Quicksand", sans-serif;
 		font-weight: 700;
 		font-size: 15px;
-		min-width: 100px;
+		min-width: 120px;
 		margin-right: 20px;
+		margin-bottom: 20px;
 		border-radius: 50px;
-		min-height: 25px;
+		min-height: 55px;
 		margin-top: 10px;
 		color: #fff;
 		cursor: pointer;
@@ -306,7 +307,73 @@ if (isset($_POST['add_plan'])) {
 	}
 	.profile-card-ctr {
 		color: #03e9f4;
-	} 
+	}
+
+
+.cards::-webkit-scrollbar {
+	height: 12px;
+}
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+  border-radius: 92px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: #03e9f4;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: #141e30;
+}
+@media (min-width: 500px) {
+  .card {
+    flex-basis: calc(50% - 10px);
+  }
+
+  .card:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .service_card {
+    flex-basis: calc(calc(100% / 3) - 20px);
+  }
+
+  .service_card:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+@media (min-width: 1100px) {
+  .card {
+    flex-basis: calc(25% - 30px);
+  }
+
+  .card:not(:last-child) {
+    margin-right: 40px;
+  }
+}
+.cards {
+  display: flex;
+  padding: 25px 0px;
+  list-style: none;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+.card {
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 15%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+}
+.seprate label,
+.seprate input {
+	margin-right: 10px;
+}
 </style>
 
 <body>
@@ -331,7 +398,7 @@ if (isset($_POST['add_plan'])) {
 				<div class="sub-title">ADMIN PANEL</div>
 				<div class="main-title">Plans</div>
 				<div class="seperator"></div>
-				<form action="" method="post">
+				<form action="" method="post" class="seprate">
 					<label for="plan_name">Plan Name</label>
 					<input name="plan_name">
 					<label for="speed">Speed</label>
@@ -346,24 +413,28 @@ if (isset($_POST['add_plan'])) {
 					</select>
 					<label for="cost">Cost</label>
 					<input name="cost">
-
-
-
 					<input name="add_plan" type="hidden">
 					<button class="profile-card__button button--orange green">ADD</button>
 				</form>
+				<div class="seperator"></div>
 
-				<div class="cards-table">
+				<div class="cards">
 					<?php
 					while ($obj = $all_plans->fetch_object()) {
 						echo '
-				<form class="profile-card-ctr" action="confirm_purchase.php" method="POST">
-					<div class="card-info">
+				<form class="card" action="confirm_purchase.php" method="POST">
+					<div class="card-info" style="color: #03e9f4;">
 						<h2 class="plan-name">
 '
 							. $obj->plan_name
 							. '
 						</h2>
+						<div>
+						<span class="label-text">Speed:</span>
+						<span class="label-value">' . $obj->internet_speed . 'Mbps</span>
+						</div>
+						<span class="label-text">₹</span>
+						<span class="label-value">' . $obj->cost . '</span>
 					</div>
 					<input type="hidden" name="plan" value="' . $obj->id . '">
 				</form>';

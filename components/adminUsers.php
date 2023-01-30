@@ -345,6 +345,67 @@ $all_users = display_users($db);
 	.card-info {
 		color: #03e9f4;
 	}
+	
+.cards::-webkit-scrollbar {
+	height: 12px;
+}
+.cards::-webkit-scrollbar-thumb,
+.cards::-webkit-scrollbar-track {
+  border-radius: 92px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background: #03e9f4;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: #141e30;
+}
+@media (min-width: 500px) {
+  .card {
+    flex-basis: calc(50% - 10px);
+  }
+
+  .card:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+@media (min-width: 700px) {
+  .service_card {
+    flex-basis: calc(calc(100% / 3) - 20px);
+  }
+
+  .service_card:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+@media (min-width: 1100px) {
+  .card {
+    flex-basis: calc(25% - 30px);
+  }
+
+  .card:not(:last-child) {
+    margin-right: 40px;
+  }
+}
+.cards {
+  display: flex;
+  padding: 25px 0px;
+  list-style: none;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 15%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 15%);
+  scroll-snap-align: start;
+  transition: all 0.2s;
+} 
 </style>
 
 <body>
@@ -369,24 +430,27 @@ $all_users = display_users($db);
 				<div class="sub-title">ADMIN PANEL</div>
 				<div class="main-title">Users</div>
 				<div class="seperator"></div>
+			<div class="cards">	
 				<?php
 				while ($obj = $all_users->fetch_object()) {
 					echo '
-					<div class="card-info">
-						<h2 class="plan-name">
-'
-						. $obj->name
-						. '
-						</h2>
-<div>
-<h4 class="plan_deets"><span>ID </span><span>' . $obj->id . '</span></h4>
-<h4 class="plan_deets"><span>Address </span><span>' . $obj->address . '</span></h4>
-<h4 class="plan_deets"><span>Phone </span><span>' . $obj->phone . '</span></h4>
-</div>
+					<div class="card" style="color: #03e9f4;">
+						<div>
+						<h2 class="plan-name">'. $obj->name. '</h2>
+						</div>
+						<div>
+						<span>ID:</span><span>' . $obj->id . '</span>
+						</div>
+						<div>
+						<span>Address:</span><span>' . $obj->address . '</span>
+						</div>
+						<div>
+						<span>Phone:</span><span>' . $obj->phone . '</span>
+						</div>
 					</div>';
 				}
 				?>
-
+			</div>
 			</div>
 		</div>
 		<div class="clear-fix"></div>
