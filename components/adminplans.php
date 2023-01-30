@@ -140,9 +140,12 @@ if (isset($_POST['add_plan'])) {
 		color: #03e9f4;
 	}
 
-	.body-wrapper .panel .aside .log-out {
+	.body-wrapper .panel .aside button {
 		position: relative;
 		margin-top: 163px;
+		margin-left: 10px;
+		background:  none;
+		border: none;
 		font-size: 11px;
 		color: #e53935;
 		font-weight: bold;
@@ -150,7 +153,7 @@ if (isset($_POST['add_plan'])) {
 		cursor: pointer;
 	}
 
-	.body-wrapper .panel .aside .log-out:hover {
+	.body-wrapper .panel .aside button:hover {
 		color: #eb6562;
 		text-decoration: none;
 	}
@@ -219,12 +222,12 @@ if (isset($_POST['add_plan'])) {
 
 	.list .item a {
 		text-decoration: none;
-		color: #141e30;
+		color: white;
 	}
 
 	.list .selected a {
 		font-size: 12px;
-		color: solid #141e30;
+		color: #03e9f4;
 	}
 
 	.profile-card__button {
@@ -236,7 +239,8 @@ if (isset($_POST['add_plan'])) {
 		min-width: 100px;
 		margin-right: 20px;
 		border-radius: 50px;
-		min-height: 55px;
+		min-height: 25px;
+		margin-top: 10px;
 		color: #fff;
 		cursor: pointer;
 		backface-visibility: hidden;
@@ -285,6 +289,24 @@ if (isset($_POST['add_plan'])) {
 	.red:hover {
 		box-shadow: 0px 7px 30px red;
 	}
+	.view form label {
+		color: #03e9f4;
+	}
+	.view form input {
+		border-radius: 10px;
+		border: none; 
+	}
+	.label-text-container span {
+		color: #03e9f4;
+	}
+	.view form select {
+		background: none;
+		border: none;
+		color: #03e9f4;
+	}
+	.profile-card-ctr {
+		color: #03e9f4;
+	} 
 </style>
 
 <body>

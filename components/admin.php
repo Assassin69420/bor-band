@@ -136,8 +136,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SE
 		color: #03e9f4;
 	}
 
-	.body-wrapper .panel .aside .log-out {
+	.body-wrapper .panel .aside button {
 		position: relative;
+		margin-left: 10px;
+		background:  none;
+		border: none;
 		margin-top: 163px;
 		font-size: 11px;
 		color: #e53935;
@@ -146,7 +149,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SE
 		cursor: pointer;
 	}
 
-	.body-wrapper .panel .aside .log-out:hover {
+	.body-wrapper .panel .aside button:hover {
 		color: #eb6562;
 		text-decoration: none;
 	}
@@ -338,12 +341,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SE
 
 	.list .item a {
 		text-decoration: none;
-		color: #141e30;
+		color: white;
 	}
 
 	.list .selected a {
 		font-size: 12px;
-		color: solid #141e30;
+		color: #03e9f4;
 	}
 </style>
 
