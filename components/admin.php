@@ -396,12 +396,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SE
 						</div>
 					</div>
 					<div class="clear-fix"></div>
-				</div>
-				<div class="min-seperator"></div>
-				<div class="general-settings">
-					<div class="clear-fix"></div>
-				</div>
-			</div>
+					<div class="seperator"></div>
 		</div>
 		<div class="clear-fix"></div>
 	</div>
