@@ -306,6 +306,10 @@ p a{
 	color: #03e9f4;
 	text-decoration: none;
 }
+p a:hover {
+  color: #03e9f4;
+  text-decoration: none;
+}
 	</style>
 </head>
 
