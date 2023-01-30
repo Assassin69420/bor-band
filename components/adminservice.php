@@ -137,17 +137,20 @@ if (isset($_POST['add_service'])) {
 		color: #03e9f4;
 	}
 
-	.body-wrapper .panel .aside .log-out {
+	.body-wrapper .panel .aside button {
 		position: relative;
 		margin-top: 163px;
 		font-size: 11px;
+		margin-left: 10px;
+		background:  none;
+		border: none;
 		color: #e53935;
 		font-weight: bold;
 		text-align: center;
 		cursor: pointer;
 	}
 
-	.body-wrapper .panel .aside .log-out:hover {
+	.body-wrapper .panel .aside button:hover {
 		color: #eb6562;
 		text-decoration: none;
 	}
@@ -216,12 +219,12 @@ if (isset($_POST['add_service'])) {
 
 	.list .item a {
 		text-decoration: none;
-		color: #141e30;
+		color: white;
 	}
 
 	.list .selected a {
 		font-size: 12px;
-		color: solid #141e30;
+		color: #03e9f4;
 	}
 
 	.profile-card__button {
@@ -281,6 +284,16 @@ if (isset($_POST['add_service'])) {
 
 	.red:hover {
 		box-shadow: 0px 7px 30px red;
+	}
+	.view form label {
+		color: #03e9f4;
+	}
+	.view form input {
+		border-radius: 10px;
+		border: none; 
+	}
+	.label-text-container span {
+		color: #03e9f4;
 	}
 </style>
 

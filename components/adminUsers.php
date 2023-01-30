@@ -130,17 +130,20 @@ $all_users = display_users($db);
 		color: #03e9f4;
 	}
 
-	.body-wrapper .panel .aside .log-out {
+	.body-wrapper .panel .aside button {
 		position: relative;
 		margin-top: 163px;
 		font-size: 11px;
+		margin-left: 10px;
+		background:  none;
+		border: none;
 		color: #e53935;
 		font-weight: bold;
 		text-align: center;
 		cursor: pointer;
 	}
 
-	.body-wrapper .panel .aside .log-out:hover {
+	.body-wrapper .panel .aside button:hover {
 		color: #eb6562;
 		text-decoration: none;
 	}
@@ -332,12 +335,15 @@ $all_users = display_users($db);
 
 	.list .item a {
 		text-decoration: none;
-		color: #141e30;
+		color: white;
 	}
 
 	.list .selected a {
 		font-size: 14px;
-		color: solid #141e30;
+		color: #03e9f4;
+	}
+	.card-info {
+		color: #03e9f4;
 	}
 </style>
 
