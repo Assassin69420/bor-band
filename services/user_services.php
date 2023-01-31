@@ -12,14 +12,14 @@ function get_user_details(string $phone, mysqli $db)
 
 function get_user_history(string $user_id, mysqli $db)
 {
-	$services_history = "SELECT US.user_id, S.service_name, US.service_period, US.date_of_purchase, S.cost as service_cost, US.service_id
-											FROM user_service_tracker US
+	$services_history = "SELECT US.user_id, S.service_name, US.service_period, US.date_of_purchase, S.cost as service_cost, US.service_id, 	
+								purchase_bill FROM user_service_tracker US
 												INNER JOIN services	S on S.id = US.service_id
 											WHERE US.user_id = '$user_id' ORDER BY US.date_of_purchase desc";
 
 	$plans_history = "SELECT PS.user_id, PS.date_of_purchase, P.cost as plan_cost, PS.plan_id,
-													 P.plan_name, P.details, P.internet_speed, P.fup_limit, P.min_first_bill_period
-									 FROM user_plan_tracker PS
+													 P.plan_name, P.details, P.internet_speed, P.fup_limit, P.min_first_bill_period, 
+													 purchase_bill FROM user_plan_tracker PS
 										 INNER JOIN internet_plans P on P.id = PS.plan_id
 									 WHERE PS.user_id = '$user_id' ORDER BY PS.date_of_purchase desc";
 

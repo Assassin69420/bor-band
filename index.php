@@ -5,6 +5,11 @@ session_start();
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$user_id = $_SESSION["user_id"];
+	// var_dump($_SESSION);
+	// exit;
+	if (isset($_SESSION["is_admin"]) && $_SESSION["is_admin"] ===1 ) {
+		header("location: components/admin.php");
+	} 
 } else {
 	header("location: login.php");
 	exit;

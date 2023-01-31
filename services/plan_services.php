@@ -20,15 +20,16 @@ function purchase_plan(string $user_id, string $plan_id, mysqli $db)
 												(user_id, amount, due_date, paid_date, related_service, related_plan, cgst_percentage, sgst_percentage)
 											VALUES
 												('$user_id','$plan_details->cost', NOW(), NOW(), null, '$plan_id', 9.5, 9.5)";
-
 	try {
 		$db->query($create_bill_sql);
-		$bill_id = $db->insert_id;
+			$bill_id = $db->insert_id;
 
 		$track_plan_sql = "INSERT INTO user_plan_tracker (user_id,plan_id,date_of_purchase,purchase_bill) VALUES ('$user_id','$plan_id',NOW(),'$bill_id')";
 
 		$db->query($track_plan_sql);
 		$db->commit();
+		
+
 
 		$bill_sql = "SELECT bill_id, user_id, amount, due_date,
 												paid_date, related_service, related_plan,

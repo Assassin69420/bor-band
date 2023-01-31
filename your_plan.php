@@ -14,6 +14,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$user_id = $_SESSION["user_id"];
 
 	$user_hist = get_user_history($user_id, $db);
+	// var_dump($user_hist[0]->fetch_object()); exit;
 } else {
 	header("location: login.php");
 	exit;
@@ -305,7 +306,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 									<form action="bills.php" method="POST">
 										<button class="profile-card__button button--orange side">View bill</button>
-										<input type="hidden" name="related_plan_id" value="' . $obj->plan_id . '">
+										<input type="hidden" name="bill_id" value="' . $obj->purchase_bill . '">
 									</form>
 							</div>
 						';
@@ -343,7 +344,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 									<form action="bills.php" method="POST">
 										<button class="profile-card__button button--orange  side">View bill</button>
-										<input type="hidden" name="related_service_id" value="' . $obj->service_id . '">
+										<input type="hidden" name="bill_id" value="' . $obj->purchase_bill. '">
 									</form>
 							</div>
 						';

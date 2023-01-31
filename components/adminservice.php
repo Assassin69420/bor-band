@@ -9,6 +9,7 @@ if (isset($_POST['add_service'])) {
 	$service_name = $_POST['service_name'];
 	$cost = $_POST['cost'];
 	enter_service($service_name, $cost, $db);
+	header("Refresh:0");
 }
 ?>
 

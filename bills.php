@@ -10,18 +10,12 @@ $phone = "";
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$phone = $_SESSION["phone"];
 	$user_id = $_SESSION["user_id"];
-	$related_service_id = $related_plan_id = "";
-
-	if (isset($_POST["related_plan_id"]) && $_POST["related_plan_id"] !== '') {
-		$related_plan_id = $_POST["related_plan_id"];
-	} else if (isset($_POST["related_service_id"]) && $_POST["related_service_id"] !== '') {
-		$related_service_id = $_POST["related_service_id"];
-	}
-
-	$bill = get_bill_userplanid(related_plan_id: $related_plan_id, related_service_id: $related_service_id, db: $db);
+	$bill_id = $_POST["bill_id"];
+	$bill = get_bill(bill_id: $bill_id, db: $db);
 	$cgst_amount = ($bill->cgst_percentage / 100) * $bill->amount;
 	$sgst_amount = ($bill->sgst_percentage / 100) * $bill->amount;
 	$total_cost = $cgst_amount + $sgst_amount + $bill->amount;
+
 } else {
 	header("location: login.php");
 	exit;
@@ -172,6 +166,8 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		<div class="plansservices_display">
 			<div class="profile-card-ctr">
+				<h1>Name: <?php echo $bill->username ?></h1>
+				<h1>Account id: <?php echo $bill->account_id ?></h1>
 				<h1><?php echo $bill->ps_name ?></h1>
 				<div class="card-info">
 					<table>

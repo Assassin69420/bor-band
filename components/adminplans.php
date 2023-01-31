@@ -12,6 +12,7 @@ if (isset($_POST['add_plan'])) {
 	$fup_limit = $_POST['fup_limit'];
 	$min_bill_period = $_POST['min_bill_period'];
 	enter_plans(plan_name: $plan_name, cost: $cost, db: $db, speed: $speed, fup_limit: $fup_limit, min_bill_period: $min_bill_period);
+	header("Refresh:0");
 }
 ?>
 
