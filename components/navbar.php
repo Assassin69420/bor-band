@@ -69,7 +69,10 @@
 </style>
 
 <?php
-
+if(isset($page)!= true)
+{
+	$page="";
+}
 session_start();
 $isLoggedin = false;
 // Check if the user is already logged in, if yes then redirect him to welcome page
