@@ -12,9 +12,7 @@ $service_name = $cost = "";
 $plan_name = $speed = $fup_limit = $min_first_bill_period = "";
 
 $details = '[]';
-//Those are the queries, post method is supposed to be used, I haven't.
 //Inserting into the service table for the interface in the admin panel at /components/adminservice.html.
-//
 
 function get_stats(mysqli $db)
 {
@@ -30,7 +28,7 @@ function get_stats(mysqli $db)
 
 function enter_service(string $service_name, int $cost, mysqli $db)
 {
-	$enter_service_sql = "INSERT INTO services(id, service_name, cost) VALUES (DEFAULT, '$service_name', $cost)";
+	$enter_service_sql = "INSERT INTO services(id, service_name, cost) VALUES (DEFAULT, '$service_name', $cost);";
 	$db->query($enter_service_sql);
 }
 
@@ -50,7 +48,7 @@ function enter_plans(string $plan_name, int $speed, int $cost, int $fup_limit, s
 
 function display_users(mysqli $db)
 {
-	$Display_users_sql = "SELECT id,name,phone,address from useraccount U";
+	$Display_users_sql = "SELECT id,name,phone,address from useraccount U;";
 													/* LEFT JOIN user_plan_tracker UP on U.id = UP.user_id */ 
 													/* 	INNER JOIN internet_plans P on P.id = UP.plan_id */
 													/* LEFT JOIN user_service_tracker US on U.id = US.user_id */
