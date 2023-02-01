@@ -167,8 +167,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		<div class="plansservices_display">
 			<div class="profile-card-ctr">
 				<h1>Name: <?php echo $bill->username ?></h1>
-				<h1>Account id: <?php echo $bill->account_id ?></h1>
-				<h1><?php echo $bill->ps_name ?></h1>
+				<h1>Account id:<?php echo $bill->account_id ?></h1>
+				<h1>Plan/Service:<?php echo $bill->ps_name ?></h1>
+				<h1>Paid Date:<?php echo $bill->paid_date ?></h1>
 				<div class="card-info">
 					<table>
 						<tr>

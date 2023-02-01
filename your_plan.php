@@ -164,7 +164,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			background: linear-gradient(45deg, #141e30, #243b55);
 			border-radius: 6px;
 			width: 360px;
-			height: 400px;
+			height: 440px;
 			position: relative;
 			padding: 2rem;
 			align-items: flex-start;
@@ -301,6 +301,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 										</p>
 										<p class="stat">Billing: ' .
 							$obj->min_first_bill_period . '
+										</p>
+										<p class="stat">Date of purchase: ' .
+							$obj->date_of_purchase . '
 										</p>
 									</div>
 
