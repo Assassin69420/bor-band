@@ -50,6 +50,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			color: #03e9f4;
 			display: flex;
 			position: relative;
+			float: left;
 			justify-content: center;
 			align-items: center;
 			margin-top: 40px;
@@ -93,7 +94,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		.plansservices_display {
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
 			align-items: center;
 			position: relative;
 			justify-content: center;
@@ -105,7 +106,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			display: flex;
 			align-items: center;
 			padding-bottom: 20px;
-			color: #03e9f4
+			font-size: 25px;
+			color: #03e9f4;
+			margin-bottom: 30px;
 		}
 		.navbar .nav>li>a {
 		line-height: 50px;
@@ -155,6 +158,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     --rotate: 360deg;
   }
 }
+.stats {
+			align-self: stretch;
+			display: grid;
+			font-size: 10px;
+			grid-template-columns: 220px 300px;
+			justify-content: space-between;
+			column-gap: 0px;
+			margin-bottom: 40px;
+		}
 
 	
 	</style>
@@ -166,10 +178,12 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		<div class="plansservices_display">
 			<div class="profile-card-ctr">
-				<h1>Name: <?php echo $bill->username ?></h1>
-				<h1>Account id:<?php echo $bill->account_id ?></h1>
-				<h1>Plan/Service:<?php echo $bill->ps_name ?></h1>
-				<h1>Paid Date:<?php echo $bill->paid_date ?></h1>
+				<div class="stats">
+				<h2>Name: <?php echo $bill->username ?></h2>
+				<h2>Plan/Service:<?php echo $bill->ps_name ?></h2>
+				<h2>Account Id:<?php echo $bill->account_id ?></h2>
+				<h2>Paid Date:<?php echo $bill->paid_date ?></h2>
+			    </div>
 				<div class="card-info">
 					<table>
 						<tr>
