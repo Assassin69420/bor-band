@@ -196,7 +196,7 @@ $page = "plans";
 						</h2>
 <div>
 <h4 class="plan_deets"><span>Speed</span><span>' . $obj->internet_speed . 'Mbps</span></h4>
-<h4 class="plan_deets"><span>FUP limit</span><span>' . $obj->fup_limit . '</span></h4>
+<h4 class="plan_deets"><span>FUP limit</span><span>' . $obj->fup_limit . 'Mb</span></h4>
 <h4 class="plan_deets"><span>Min period</span><span>' . $obj->min_first_bill_period . '</span></h4>
 </div>
 					</div>
