@@ -174,11 +174,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					<td>₹<?php echo $service_deets->cost; ?></td>
 				</tr>
 				<tr>
-					<td>cgst 9.5%</td>
+					<td>cgst 9%</td>
 					<td>₹<?php echo (int) $service_deets->cost * 0.095; ?></td>
 				</tr>
 				<tr>
-					<td>sgst 9.5%</td>
+					<td>sgst 9%</td>
 					<td>₹<?php echo (int) $service_deets->cost * 0.095; ?></td>
 				</tr>
 				<tr>
