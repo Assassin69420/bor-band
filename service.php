@@ -21,20 +21,78 @@ $page = "service";
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<style>
+		@property --rotate {
+  			syntax: "<angle>";
+  			initial-value: 132deg;
+  			inherits: false;
+		}
+		:root {
+			--card-height: 65vh;
+			--card-width: calc(var(--card-height) / 1.5);
+		}
+		.service_card::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+.service_card::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
 		.service_card {
 			flex-grow: 0;
+			width: 280px;
+			height: 300px;
 			flex-direction: column;
 			align-items: flex-start;
 			align-items: center;
 			padding: 1rem;
-			background-color: white;
+			background: linear-gradient(45deg, #141e30, #243b55);
 			color: black;
-			border-radius: 4%;
+			border-radius: 6px;
+			position: relative;
+			content: "";
+			overflow: visible;
 		}
 
 		.profile-card__button {
+			margin-top: 40px;
 			margin: unset !important;
 		}
+
 
 		.service_card_img img {
 			max-height: 100%;
@@ -47,13 +105,10 @@ $page = "service";
 			justify-content: space-between;
 			gap: 1rem;
 			color: white;
-			background: linear-gradient(360deg, #141e30, #243b55);
+			background: none;
 			border-radius: 15px;
-			border: 2px solid #243b55;
 			padding: 50px;
 			margin-top: 10rem;
-			width: 90%;
-			height: 700px;
 			margin-right: auto;
 			margin-left: auto;
 			align-items: flex-start;
@@ -62,8 +117,12 @@ $page = "service";
 		.label-text-container {
 			display: flex;
 			flex-direction: column;
+			background: none;
 			align-items: center;
+			color: #03e9f4;
+
 			gap: 0.7rem;
+			margin-bottom: 40px;
 		}
 
 		.label-text {
@@ -75,11 +134,12 @@ $page = "service";
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="confirm_purchase.php" class="service_card-container" method="POST">
+	<div class="service_card-container">
 		<?php
 		while ($obj = $all_services->fetch_object()) {
 			echo '
-						 <div class="service_card">
+						 <form class="service_card" action="confirm_purchase.php" method="POST">
+						    <div class="">
 							 <p class="label-text-container"> 
 								<span class="label-text">Service Name </span>
 								<span class="label-value">' . $obj->service_name . '</span>
@@ -89,11 +149,12 @@ $page = "service";
 							 </p>
 							 <input type="hidden" name="service" value="' . $obj->id . '">
 							 <button type="submit" class="profile-card__button button--orange">Purchase</button>
-						 </div>
+							</div>
+						 </form>
 					  ';
 		}
 		?>
-	</form>
+	</div>
 
 </body>
 

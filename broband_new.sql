@@ -1,5 +1,5 @@
 CREATE TABLE useraccount (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL,
     phone BIGINT NOT NULL,
@@ -8,9 +8,10 @@ CREATE TABLE useraccount (
 );
 
 CREATE TABLE ulogin (
-    user_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
     phone BIGINT NOT NULL,
     password VARCHAR(255) NOT NULL,
+		is_admin BOOLEAN DEFAULT false,
 		PRIMARY KEY(user_id,phone)
 );
 
@@ -32,30 +33,35 @@ CREATE TABLE services(
 		PRIMARY KEY(id)
 );
 
+CREATE TABLE bills(
+    bill_id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    amount BIGINT NOT NULL,
+    due_date TIMESTAMP NOT NULL,
+    paid_date TIMESTAMP NULL,
+    related_service INT NULL,
+    related_plan INT NULL,
+		offer_id INT NULL,
+    cgst_percentage DOUBLE NOT NULL,
+    sgst_percentage DOUBLE NOT NULL,
+		PRIMARY KEY(bill_id)
+);
+
 CREATE TABLE user_plan_tracker(
     user_id INT NOT NULL,
     plan_id INT NOT NULL,
-    date_of_purchase DATE NOT NULL
+		purchase_bill INT NOT NULL,
+    date_of_purchase TIMESTAMP NOT NULL,
+		FOREIGN KEY(purchase_bill) REFERENCES bills(bill_id)
 );
 
 CREATE TABLE user_service_tracker(
     user_id BIGINT NOT NULL,
     service_id BIGINT NOT NULL,
     service_period VARCHAR(255) NULL,
-    date_of_purchase DATE NOT NULL
-);
-
-CREATE TABLE bills(
-    bill_id INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    amount BIGINT NOT NULL,
-    due_date DATE NOT NULL,
-    paid_date DATE NULL,
-    related_service INT NULL,
-    related_plan INT NULL,
-    cgst_percentage DOUBLE NOT NULL,
-    sgst_percentage DOUBLE NOT NULL,
-		PRIMARY KEY(bill_id)
+		purchase_bill INT NOT NULL,
+    date_of_purchase TIMESTAMP NOT NULL,
+		FOREIGN KEY(purchase_bill) REFERENCES bills(bill_id)
 );
 
 CREATE TABLE offers(
@@ -75,10 +81,6 @@ ALTER TABLE
     user_plan_tracker ADD CONSTRAINT user_plan_tracker_user_id_foreign FOREIGN KEY(user_id) REFERENCES useraccount(id);
 ALTER TABLE
     user_plan_tracker ADD CONSTRAINT user_plan_tracker_plan_id_foreign FOREIGN KEY(plan_id) REFERENCES internet_plans(id);
-ALTER TABLE
-    internet_plans ADD CONSTRAINT internet_plans_offer_id_foreign FOREIGN KEY(offer_id) REFERENCES offers(id);
-ALTER TABLE
-    services ADD CONSTRAINT services_offer_id_foreign FOREIGN KEY(offer_id) REFERENCES offers(id);
 ALTER TABLE
     bills ADD CONSTRAINT bills_user_id_foreign FOREIGN KEY(user_id) REFERENCES useraccount(id);
 ALTER TABLE

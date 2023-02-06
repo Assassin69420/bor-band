@@ -93,12 +93,6 @@ a {
   margin-top: 2rem;
 }
 
-.table{
-  padding-left: 100px;
-}
-.tr{
-  margin: 100px;
-}
 
 .profile-card-ctr {
 			display: flex;
@@ -122,9 +116,4 @@ a {
 			margin-left: auto;
 			margin-right: auto;
 			justify-content: center;
-		}
-
-		.plan-name {
-			margin-top: 1.5rem;
-			padding: 2.5rem;
 		}

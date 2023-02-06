@@ -10,12 +10,18 @@ $phone = "";
 if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$phone = $_SESSION["phone"];
 	$user_id = $_SESSION["user_id"];
-	$bill_id = $_POST["bill_id"];
-	$bill = get_bill(bill_id: $bill_id, db: $db);
+	$related_service_id = $related_plan_id = "";
+
+	if (isset($_POST["related_plan_id"]) && $_POST["related_plan_id"] !== '') {
+		$related_plan_id = $_POST["related_plan_id"];
+	} else if (isset($_POST["related_service_id"]) && $_POST["related_service_id"] !== '') {
+		$related_service_id = $_POST["related_service_id"];
+	}
+
+	$bill = get_bill_userplanid(related_plan_id: $related_plan_id, related_service_id: $related_service_id, db: $db);
 	$cgst_amount = ($bill->cgst_percentage / 100) * $bill->amount;
 	$sgst_amount = ($bill->sgst_percentage / 100) * $bill->amount;
 	$total_cost = $cgst_amount + $sgst_amount + $bill->amount;
-
 } else {
 	header("location: login.php");
 	exit;
@@ -39,6 +45,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
+
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
 
 		td {
@@ -50,7 +57,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			color: #03e9f4;
 			display: flex;
 			position: relative;
-			float: left;
 			justify-content: center;
 			align-items: center;
 			margin-top: 40px;
@@ -94,7 +100,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		.plansservices_display {
 			display: flex;
-			flex-direction: row;
+			flex-direction: column;
 			align-items: center;
 			position: relative;
 			justify-content: center;
@@ -106,9 +112,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			display: flex;
 			align-items: center;
 			padding-bottom: 20px;
-			font-size: 25px;
-			color: #03e9f4;
-			margin-bottom: 30px;
+			color: #03e9f4
 		}
 		.navbar .nav>li>a {
 		line-height: 50px;
@@ -158,55 +162,39 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
     --rotate: 360deg;
   }
 }
-.stats {
-			align-self: stretch;
-			display: grid;
-			font-size: 10px;
-			grid-template-columns: 220px 300px;
-			justify-content: space-between;
-			column-gap: 0px;
-			margin-bottom: 40px;
-		}
 
 	
 	</style>
 </head>
-
 <body>
-	<?php include_once 'components/navbar.php' ?>
-	<section class="cards-table">
+<?php include_once 'components/navbar.php' ?>
+<section class="cards-table">
 
-		<div class="plansservices_display">
-			<div class="profile-card-ctr">
-				<div class="stats">
-				<h2>Name: <?php echo $bill->username ?></h2>
-				<h2>Plan/Service:<?php echo $bill->ps_name ?></h2>
-				<h2>Account Id:<?php echo $bill->account_id ?></h2>
-				<h2>Paid Date:<?php echo $bill->paid_date ?></h2>
-			    </div>
-				<div class="card-info">
-					<table>
-						<tr>
-							<td>Total Charges</td>
-							<td>₹<?php echo $bill->amount ?></td>
-						</tr>
-						<tr>
-							<td>cgst 9.5%</td>
-							<td>₹<?php echo $cgst_amount; ?></td>
-						</tr>
-						<tr>
-							<td>sgst 9.5%</td>
-							<td>₹<?php echo $sgst_amount; ?></td>
-						</tr>
-						<tr>
-							<td>Total</td>
-							<td>₹<?php echo $total_cost; ?></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</section>
+<div class="plansservices_display">
+    <div class="profile-card-ctr">
+    <h1><?php echo $bill->ps_name ?></h1>
+        <div class="card-info">
+            <table>
+                <tr>
+                    <td>Total Charges</td>
+                    <td>₹<?php echo $bill->amount ?></td>
+                </tr>
+                <tr>
+                    <td>cgst 9.5%</td>
+                    <td>₹<?php echo $cgst_amount; ?></td>
+                </tr>
+                <tr>
+                    <td>sgst 9.5%</td>
+                    <td>₹<?php echo $sgst_amount; ?></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>₹<?php echo $total_cost; ?></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</section>
 </body>
-
 </html>

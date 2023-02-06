@@ -20,34 +20,75 @@ $page = "plans";
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
-
-		.profile-card-ctr {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-top: 40px;
-			flex-direction: column;
-			min-height: 30rem;
-			min-width: 10rem;
-			background: white;
-			border-radius: 3%;
-			gap: 1.5rem;
+		@property --rotate {
+  			syntax: "<angle>";
+  			initial-value: 132deg;
+  			inherits: false;
 		}
+		:root {
+			--card-height: 65vh;
+			--card-width: calc(var(--card-height) / 1.5);
+		}
+		.profile-card-ctr::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+.profile-card-ctr::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+
 
 		.cards-table {
-			width: 80%;
-			margin-top: 10rem;
 			display: flex;
-			flex-direction: row;
-			gap: 5rem;
 			flex-wrap: wrap;
-			margin-left: auto;
+			justify-content: space-between;
+			gap: 1rem;
+			color: #03e9f4;
+			background: none;
+			border-radius: 15px;
+			padding: 50px;
+			margin-top: 10rem;
 			margin-right: auto;
-			justify-content: center;
+			margin-left: auto;
+			align-items: flex-start;
 		}
 
 		.plan-name {
-			margin-top: 1.5rem;
 			padding: 2.5rem;
 		}
 
@@ -80,7 +121,14 @@ $page = "plans";
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-top: 40px;
+			margin-top: 10px;
+			position: relative;
+			flex-direction: column;
+			min-height: 360px;
+			min-width: 280px;
+			background: linear-gradient(45deg, #141e30, #243b55);
+			border-radius: 3%;
+			gap: 1.5rem;
 		}
 
 		@media screen and (max-width: 576px) {
@@ -121,17 +169,25 @@ $page = "plans";
 			flex-wrap: wrap;
 			justify-content: space-between;
 		}
+		.navbar .nav>li>a {
+		line-height: 50px;
+		padding: 0px 14px;
+		font-size: 11.7px;
+		transition: all 0.6s 0s;
+		text-decoration: none;
+	}
+
 	</style>
 </head>
 
 <body>
 	<?php include_once 'components/navbar.php' ?>
-	<form action="confirm_purchase.php" method="POST">
+	<div>
 		<div class="cards-table">
 			<?php
 			while ($obj = $all_plans->fetch_object()) {
 				echo '
-				<div class="profile-card-ctr">
+				<form class="profile-card-ctr" action="confirm_purchase.php" method="POST">
 					<div class="card-info">
 						<h2 class="plan-name">
 '
@@ -139,19 +195,19 @@ $page = "plans";
 					. '
 						</h2>
 <div>
-<h4 class="plan_deets"><span>Speed</span><span>' . $obj->internet_speed . '</span></h4>
-<h4 class="plan_deets"><span>FUP limit</span><span>' . $obj->fup_limit . '</span></h4>
+<h4 class="plan_deets"><span>Speed</span><span>' . $obj->internet_speed . 'Mbps</span></h4>
+<h4 class="plan_deets"><span>FUP limit </span><span>' . $obj->fup_limit . ' Mb</span></h4>
 <h4 class="plan_deets"><span>Min period</span><span>' . $obj->min_first_bill_period . '</span></h4>
 </div>
 					</div>
 <h4>₹' . $obj->cost . '</h4>
 					<input type="hidden" name="plan" value="' . $obj->id . '">
 					<button type="submit" class="profile-card__button button--orange">Activate</button>
-				</div>';
+				</form>';
 			}
 			?>
 		</div>
-	</form>
+	</div>
 
 	<script src="home.js"></script>
 

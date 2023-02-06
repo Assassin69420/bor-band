@@ -6,6 +6,8 @@
 		width: 100%;
 		height: 100%;
 		background: linear-gradient(#141e30, #243b55);
+		background-size: 100% 400vh;
+			background-repeat: repeat-y;
 
 	}
 
@@ -15,6 +17,7 @@
 	}
 
 	.navbar {
+		position: fixed;
 		background: linear-gradient(135deg, #141e30, #03e9f4, #141e30);
 		border: 0;
 		z-index: 9999;
@@ -66,8 +69,10 @@
 </style>
 
 <?php
-include('db.php');
-
+if(isset($page)!= true)
+{
+	$page="";
+}
 session_start();
 $isLoggedin = false;
 // Check if the user is already logged in, if yes then redirect him to welcome page
@@ -102,13 +107,14 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 				<li><a href="index.php" <?php if ($page === 'home') echo 'class="active"'; ?>>Home</a></li>
 				<li><a href="service.php" <?php if ($page === 'service') echo 'class="active"'; ?>>Service</a></li>
 				<li><a href="plans.php" <?php if ($page === 'plans') echo 'class="active"'; ?>>Plans</a></li>
+				<li><a href="your_plan.php" <?php if ($page === 'your_plan') echo 'class="active"'; ?>>Your Plans</a></li>
 				<?php
 				$class = "notactive";
 				if ($page === "profile") $class = "active";
 				if ($isLoggedin) {
 					echo '<li><a href="profile.php"',  ' class="', $class, '">Profile</a></li>';
 				} else {
-					echo '<li><a href="login.php"',  ' class="', $class, '">Login</a></li>';
+					echo '<li><a href="profile.php"',  ' class="', $class, '">Profile</a></li>';
 				}
 				?>
 			</ul>

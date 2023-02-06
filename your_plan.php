@@ -1,4 +1,5 @@
 <?php
+$page = 'your_plan';
 include('db.php');
 include('services/plan_services.php');
 include('services/user_services.php');
@@ -13,6 +14,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	$user_id = $_SESSION["user_id"];
 
 	$user_hist = get_user_history($user_id, $db);
+	// var_dump($user_hist[0]->fetch_object()); exit;
 } else {
 	header("location: login.php");
 	exit;
@@ -37,7 +39,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Averia+Serif+Libre|Bubblegum+Sans|Caveat+Brush|Chewy|Lobster+Two');
-
+		body {
+			background: linear-gradient(45deg, #141e30, #243b55);
+			background-size: 100% 400vh;
+			background-repeat: repeat-y;
+		}
 		.profile-card-ctr {
 			display: flex;
 			justify-content: center;
@@ -57,11 +63,6 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			gap: 1rem;
 		}
 
-		.plan-name {
-			margin-top: 1.5rem;
-			padding: 2.5rem;
-		}
-
 		@media screen and (max-width: 576px) {
 			.profile-card-ctr {
 				flex-wrap: wrap;
@@ -74,7 +75,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			font-family: "Quicksand", sans-serif;
 			font-weight: 700;
 			font-size: 19px;
-			margin: 15px 35px;
+			margin: 15px 45px;
 			padding: 15px 40px;
 			min-width: 201px;
 			border-radius: 50px;
@@ -130,7 +131,9 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		}
 
 		.title {
-			color: white;
+			font-size: 34px;
+			color: #03e9f4;
+			margin-bottom: 80px;
 		}
 
 		.plansservices_display {
@@ -143,8 +146,125 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 
 		.card-info {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
 		}
+
+		.plan-cards {
+			display: flex;
+			flex-direction: row;
+			gap: 1rem;
+			flex-wrap: wrap;
+		}
+
+		.plansservice_card {
+			color: #03e9f4;
+			display: flex;
+			flex-direction: column;
+			background: linear-gradient(45deg, #141e30, #243b55);
+			border-radius: 6px;
+			width: 360px;
+			height: 440px;
+			position: relative;
+			padding: 2rem;
+			align-items: flex-start;
+			gap: 3rem;
+			margin-right: 10px;
+			margin-bottom: 10px
+		}
+
+		.stats {
+			align-self: stretch;
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			justify-content: space-between;
+			column-gap: 10rem;
+		}
+
+		.plan-status {
+			padding: 0.5rem 1rem;
+			background-color: #ADE792;
+			color: #141e30;
+			border-top-left-radius: 55% 45px;
+			border-bottom-left-radius: 55% 45px;
+			border-top-right-radius: 55% 45px;
+			border-bottom-right-radius: 55% 45px;
+			text-align: center;
+		}
+
+		.plan-name {
+			line-height: 4rem;
+			margin: unset;
+			font-weight: bold;
+			font-size: 25px;
+		}
+
+		.plan-name span {
+			display: block;
+			font-size: 30px;
+		}
+		.navbar .nav>li>a {
+		line-height: 50px;
+		padding: 0px 14px;
+		font-size: 12px;
+		transition: all 0.6s 0s;
+		}
+		@property --rotate {
+  			syntax: "<angle>";
+  			initial-value: 132deg;
+  			inherits: false;
+		}
+		:root {
+			--card-height: 65vh;
+			--card-width: calc(var(--card-height) / 1.5);
+		}
+		.plansservice_card::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+.plansservice_card::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
+.side {
+	margin-left: 60px;
+}
+
+
 	</style>
 </head>
 
@@ -152,63 +272,90 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 	<?php include_once 'components/navbar.php' ?>
 	<div class="cards-table">
 
-		<div class="plansservices_display">
-			<?php if ($user_hist[1]->num_rows > 0) : ?>
-				<h2 class="title">Active Services</h2>
-				<div class="plan-card">
+		<?php if ($user_hist[1]->num_rows > 0) : ?>
+			<div class="plansservices_display plan">
+				<h2 class="title">Active Plans</h2>
+				<div class="plan-cards">
 					<?php
 					while ($obj = $user_hist[1]->fetch_object()) {
 						echo '
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
+							<div class="plansservice_card">
+									<span class="plan-status">🗸 ACTIVE</span>
+									<h2 class="plan-name">
+										Your current plan is:
+										<span>
+										' .
 							$obj->plan_name . '
-									</h3>
-									<h2 class="plan-name">$' .
-							$obj->plan_cost . '
+										</span>
 									</h2>
+
+									<div class="stats">
+										<p class="stat">Speed: ' .
+							$obj->internet_speed . 'Mbps
+										</p>
+										<p class="stat">FUP Limit: ' .
+							$obj->fup_limit . '
+										</p>
+										<p class="stat">Price: ₹' .
+							$obj->plan_cost . '
+										</p>
+										<p class="stat">Billing: ' .
+							$obj->min_first_bill_period . '
+										</p>
+										<p class="stat">Date of purchase: ' .
+							$obj->date_of_purchase . '
+										</p>
+									</div>
+
 									<form action="bills.php" method="POST">
-										<button>View bills</button>
-										<input type="hidden" name="related_plan_id" value"' . $obj->plan_id . '">
+										<button class="profile-card__button button--orange side">View bill</button>
+										<input type="hidden" name="bill_id" value="' . $obj->purchase_bill . '">
 									</form>
-								</div>
 							</div>
 						';
 					}
 					?>
 				</div>
-			<?php endif ?>
-		</div>
+			</div>
+		<?php endif ?>
 
-		<div class="plansservices_display">
-			<?php if ($user_hist[0]->num_rows > 0) : ?>
+		<?php if ($user_hist[0]->num_rows > 0) : ?>
+			<div class="plansservices_display">
 				<h2 class="title">Active Services</h2>
-				<div class="plan-card">
+				<div class="plan-cards left-css">
 					<?php
 					while ($obj = $user_hist[0]->fetch_object()) {
 						echo '
-							<div class="profile-card-ctr">
-								<div class="card-info">
-									<h3 class="plan-name">' .
-							$obj->service_name . '
-									</h3>
-									<h2 class="plan-name">₹' .
-							$obj->service_cost . '
-									</h2>
+							<div class="plansservice_card">
+									<span class="plan-status">🗸 ACTIVE</span>
 									<h2 class="plan-name">
-									<form action="bills.php" method="POST">
-										<button>View bills</button>
-										<input type="hidden" name="related_service_id" value"' . $obj->service_id . '">
-									</form>
+										Your current service is:
+										<span>
+										' .
+							$obj->service_name . '
+										</span>
 									</h2>
-								</div>
+
+									<div class="stats">
+										<p class="stat">Price: ₹' .
+							$obj->service_cost . '
+										</p>
+										<p class="stat">Date of purchase: ' .
+							$obj->date_of_purchase . '
+										</p>
+									</div>
+
+									<form action="bills.php" method="POST">
+										<button class="profile-card__button button--orange  side">View bill</button>
+										<input type="hidden" name="bill_id" value="' . $obj->purchase_bill. '">
+									</form>
 							</div>
 						';
 					}
 					?>
 				</div>
-			<?php endif ?>
-		</div>
+			</div>
+		<?php endif ?>
 	</div>
 
 	<script src="home.js"></script>

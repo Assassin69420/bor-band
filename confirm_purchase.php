@@ -45,7 +45,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			align-items: flex-start;
 			align-items: center;
 			padding: 1rem;
-			background-color: white;
+			background-color: #03e9f4;;
 			color: black;
 			border-radius: 4%;
 		}
@@ -64,14 +64,15 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			flex-wrap: wrap;
 			flex-direction: column;
 			gap: 1rem;
-			color: white;
+			position: relative;
+			color: #03e9f4;
 			background: linear-gradient(360deg, #141e30, #243b55);
 			border-radius: 15px;
 			border: 2px solid #243b55;
 			padding: 50px;
 			margin-top: 10rem;
-			width: 90%;
-			height: 700px;
+			width: 400px;
+			height: 600px;
 			margin-right: auto;
 			margin-left: auto;
 			align-items: center;
@@ -83,20 +84,22 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 			flex-direction: column;
 			align-items: center;
 			gap: 0.7rem;
+			color: #03e9f4;
 		}
 
 		.label-text {
 			font-size: 17px;
 			font-weight: bold;
+			color: #03e9f4;
 		}
 
 		table {
-			color: white;
+			color: #03e9f4;
 		}
 
 		td,
 		th {
-			border: 1px solid white;
+			border: 1px solid #03e9f4;
 			padding: 0.9rem;
 			padding-inline: 4rem;
 		}
@@ -104,6 +107,57 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 		.profile-card__button {
 			margin-top: 7.9rem !important;
 		}
+		@property --rotate {
+  			syntax: "<angle>";
+  			initial-value: 132deg;
+  			inherits: false;
+		}
+		:root {
+			--card-height: 65vh;
+			--card-width: calc(var(--card-height) / 1.5);
+		}
+		.service_card-container::before {
+  content: "";
+  width: 104%;
+  height: 102%;
+  border-radius: 8px;
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    position: absolute;
+    z-index: -1;
+    top: -1%;
+    left: -2%;
+    animation: spin 2.5s linear infinite;
+}
+.service_card-container::after {
+  position: absolute;
+  content: "";
+  top: calc(var(--card-height) / 6);
+  left: 0;
+  right: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(0.8);
+  filter: blur(calc(var(--card-height) / 6));
+  background-image: linear-gradient(
+    var(--rotate)
+    , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+  transition: opacity .5s;
+  animation: spin 2.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    --rotate: 0deg;
+  }
+  100% {
+    --rotate: 360deg;
+  }
+}
 	</style>
 </head>
 
@@ -120,11 +174,11 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 					<td>₹<?php echo $service_deets->cost; ?></td>
 				</tr>
 				<tr>
-					<td>cgst 9.5%</td>
+					<td>cgst 9%</td>
 					<td>₹<?php echo (int) $service_deets->cost * 0.095; ?></td>
 				</tr>
 				<tr>
-					<td>sgst 9.5%</td>
+					<td>sgst 9%</td>
 					<td>₹<?php echo (int) $service_deets->cost * 0.095; ?></td>
 				</tr>
 				<tr>

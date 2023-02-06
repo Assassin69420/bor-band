@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if (empty($phone_err) && empty($password_err)) {
-		$sql = "SELECT user_id, phone, password FROM ulogin WHERE phone = ?";
+		$sql = "SELECT user_id, phone, password, is_admin FROM ulogin WHERE phone = ?";
 
 		if ($stmt = mysqli_prepare($db, $sql)) {
 			mysqli_stmt_bind_param($stmt, "s", $param_phone);
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			if (mysqli_stmt_execute($stmt)) {
 				mysqli_stmt_store_result($stmt);
 				if (mysqli_stmt_num_rows($stmt) == 1) {
-					mysqli_stmt_bind_result($stmt, $user_id, $phone, $stored_password);
+					mysqli_stmt_bind_result($stmt, $user_id, $phone, $stored_password, $is_admin);
 					if (mysqli_stmt_fetch($stmt)) {
 						if ($password == $stored_password) {
 							session_start();
@@ -44,8 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 							$_SESSION["loggedin"] = true;
 							$_SESSION["phone"] = $phone;
 							$_SESSION["user_id"] = $user_id;
+							$_SESSION["is_admin"] = $is_admin;
 
-							header("location: index.php");
+							if ($is_admin) {
+								header("location: components/admin.php");
+							} else {
+								header("location: index.php");
+							}
 						} else {
 							$login_err = "Invalid phone number or password.";
 						}
@@ -139,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			font-size: 12px;
 		}
 
-		.login-box form a {
+		.login-box form button {
 			position: relative;
 			display: inline-block;
 			padding: 10px 20px;
@@ -148,12 +153,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			text-decoration: none;
 			text-transform: uppercase;
 			overflow: hidden;
+			background: none;
+			border: none;
 			transition: .5s;
 			margin-top: 40px;
 			letter-spacing: 4px
 		}
 
-		.login-box a:hover {
+		.login-box button:hover {
 			background: #03e9f4;
 			color: #fff;
 			border-radius: 5px;
@@ -163,12 +170,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				0 0 100px #03e9f4;
 		}
 
-		.login-box a span {
+		.login-box button span {
 			position: absolute;
 			display: block;
 		}
 
-		.login-box a span:nth-child(1) {
+		.login-box button span:nth-child(1) {
 			top: 0;
 			left: -100%;
 			width: 100%;
@@ -188,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			}
 		}
 
-		.login-box a span:nth-child(2) {
+		.login-box button span:nth-child(2) {
 			top: -100%;
 			right: 0;
 			width: 2px;
@@ -209,7 +216,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			}
 		}
 
-		.login-box a span:nth-child(3) {
+		.login-box button span:nth-child(3) {
 			bottom: 0;
 			right: -100%;
 			width: 100%;
@@ -230,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			}
 		}
 
-		.login-box a span:nth-child(4) {
+		.login-box button span:nth-child(4) {
 			bottom: -100%;
 			left: 0;
 			width: 2px;
@@ -302,6 +309,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			background-image: -webkit-linear-gradient(45deg, #141e30, #243b55);
 			background-image: linear-gradient(45deg, #141e30, #243b55);
 		}
+
+		.reset {
+			margin-left: 70px;
+		}
+
+		p {
+			color: white;
+			margin-top: 30px;
+			text-align: center;
+		}
+
+		p a {
+			color: #03e9f4;
+			text-decoration: none;
+		}
 	</style>
 </head>
 
@@ -324,6 +346,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				<span></span>
 				Submit
 			</button>
+			<p>Don't have an account? <a href="register.php">register here</a>.</p>
 		</form>
 	</div>
 	<div id="particles-background" class="vertical-centered-box"></div>
